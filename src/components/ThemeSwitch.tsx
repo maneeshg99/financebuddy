@@ -2,30 +2,32 @@
 
 import { useEffect, useState } from "react";
 
-export type Theme = "default" | "redesign" | "brutal";
+export type Theme = "default" | "redesign" | "brutal" | "taste";
 const STORAGE_KEY = "fb:theme";
-const ORDER: Theme[] = ["brutal", "redesign", "default"];
+const ORDER: Theme[] = ["brutal", "redesign", "taste", "default"];
 
 function sanitize(v: string | null): Theme {
-  return v === "default" || v === "redesign" ? v : "brutal";
+  return v === "default" || v === "redesign" || v === "taste" ? v : "brutal";
 }
 
 function applyTheme(t: Theme) {
   if (typeof document === "undefined") return;
   const html = document.documentElement;
-  html.classList.remove("theme-default", "theme-redesign", "theme-brutal");
+  html.classList.remove("theme-default", "theme-redesign", "theme-brutal", "theme-taste");
   html.classList.add(`theme-${t}`);
 }
 
 const LABEL: Record<Theme, string> = {
-  default: "// DEFAULT",
-  redesign: "/ REDESIGN",
   brutal: "[ TERMINAL ]",
+  redesign: "/ REDESIGN",
+  taste: "· TASTE",
+  default: "// DEFAULT",
 };
 
 const TITLE: Record<Theme, string> = {
   brutal: "Switch to redesign theme",
-  redesign: "Switch to default theme",
+  redesign: "Switch to taste theme",
+  taste: "Switch to default theme",
   default: "Switch back to terminal theme",
 };
 

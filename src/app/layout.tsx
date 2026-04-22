@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const NO_FLASH_SCRIPT = `(() => {
   try {
     var t = localStorage.getItem("fb:theme");
-    if (t !== "default" && t !== "redesign") t = "brutal";
+    if (t !== "default" && t !== "redesign" && t !== "taste") t = "brutal";
     document.documentElement.classList.add("theme-" + t);
   } catch (e) {
     document.documentElement.classList.add("theme-brutal");
