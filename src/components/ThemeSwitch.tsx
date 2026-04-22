@@ -2,27 +2,46 @@
 
 import { useEffect, useState } from "react";
 
-export type Theme = "default" | "brutal";
+export type Theme = "default" | "redesign" | "brutal";
 const STORAGE_KEY = "fb:theme";
+const ORDER: Theme[] = ["default", "redesign", "brutal"];
+
+function sanitize(v: string | null): Theme {
+  return v === "redesign" || v === "brutal" ? v : "default";
+}
 
 function applyTheme(t: Theme) {
   if (typeof document === "undefined") return;
   const html = document.documentElement;
-  html.classList.remove("theme-default", "theme-brutal");
+  html.classList.remove("theme-default", "theme-redesign", "theme-brutal");
   html.classList.add(`theme-${t}`);
 }
+
+const LABEL: Record<Theme, string> = {
+  default: "// DEFAULT",
+  redesign: "/ REDESIGN",
+  brutal: "[ TERMINAL ]",
+};
+
+const TITLE: Record<Theme, string> = {
+  default: "Switch to redesign theme",
+  redesign: "Switch to brutalist terminal theme",
+  brutal: "Switch back to default theme",
+};
 
 export default function ThemeSwitch() {
   const [theme, setTheme] = useState<Theme | null>(null);
 
   useEffect(() => {
-    const saved = (localStorage.getItem(STORAGE_KEY) as Theme | null) ?? "default";
+    const saved = sanitize(localStorage.getItem(STORAGE_KEY));
     setTheme(saved);
     applyTheme(saved);
   }, []);
 
-  function toggle() {
-    const next: Theme = theme === "brutal" ? "default" : "brutal";
+  function cycle() {
+    const current = theme ?? "default";
+    const idx = ORDER.indexOf(current);
+    const next = ORDER[(idx + 1) % ORDER.length];
     setTheme(next);
     try {
       localStorage.setItem(STORAGE_KEY, next);
@@ -32,15 +51,15 @@ export default function ThemeSwitch() {
     applyTheme(next);
   }
 
-  const label =
-    theme === null ? "…" : theme === "brutal" ? "[ TERMINAL ]" : "// DEFAULT";
+  const label = theme === null ? "…" : LABEL[theme];
+  const title = theme === null ? "Toggle visual theme" : TITLE[theme];
 
   return (
     <button
       type="button"
-      onClick={toggle}
-      aria-label="Toggle visual theme"
-      title={theme === "brutal" ? "Switch to default theme" : "Switch to brutalist terminal theme"}
+      onClick={cycle}
+      aria-label="Cycle visual theme"
+      title={title}
       className="fb-theme-switch font-mono text-xs uppercase tracking-wider border border-border px-2.5 py-1.5 text-muted hover:text-ink hover:border-accent/60 transition whitespace-nowrap"
     >
       {label}

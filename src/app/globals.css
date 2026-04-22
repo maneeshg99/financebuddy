@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=VT323&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -31,12 +31,24 @@ body {
    Default-theme baseline for brutal-only UI elements.
    Hidden whenever the brutal theme is NOT active.
    ----------------------------------------------------------- */
-.fb-brutal-only {
+.fb-brutal-only,
+.fb-redesign-only {
   display: none;
 }
 html.theme-default .fb-scanlines,
-html.theme-default .fb-brutal-only {
+html.theme-default .fb-brutal-only,
+html.theme-default .fb-redesign-only {
   display: none !important;
+}
+html.theme-redesign .fb-scanlines,
+html.theme-redesign .fb-brutal-only {
+  display: none !important;
+}
+html.theme-redesign .fb-redesign-only {
+  display: block;
+}
+html.theme-redesign span.fb-redesign-only {
+  display: inline;
 }
 
 /* Scanline / noise overlay container is injected globally in layout.tsx.
@@ -324,4 +336,289 @@ html.theme-brutal .fb-verdict {
 html.theme-brutal .font-mono {
   font-family: "JetBrains Mono", ui-monospace, monospace !important;
   font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+/* ===========================================================
+   .theme-redesign — polished editorial dark mode
+   Warm-tinted palette, Outfit display + IBM Plex Mono numbers,
+   tinted shadows, refined radii, considered hover states.
+   =========================================================== */
+
+html.theme-redesign {
+  --fb-bg: #0b0a09;
+  --fb-bg-grad: radial-gradient(
+    ellipse at 20% -10%,
+    rgba(232, 184, 106, 0.045) 0%,
+    transparent 55%
+  );
+  --fb-panel: #14110d;
+  --fb-panel2: #1c1813;
+  --fb-border: #2a2420;
+  --fb-border-soft: #221d19;
+  --fb-border-hover: #3a3128;
+  --fb-ink: #f5f2ec;
+  --fb-muted: #b3ab9f;
+  --fb-dim: #6d665c;
+  --fb-accent: #e8b86a;
+  --fb-accent-soft: rgba(232, 184, 106, 0.18);
+  --fb-up: #6bbf8a;
+  --fb-down: #d97766;
+  --fb-warn: #e8c26a;
+  color-scheme: dark;
+}
+
+html.theme-redesign,
+html.theme-redesign body {
+  background: var(--fb-bg);
+  color: var(--fb-ink);
+}
+
+html.theme-redesign body {
+  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-feature-settings: "ss01" 1, "cv11" 1;
+  background-image: var(--fb-bg-grad);
+  background-attachment: fixed;
+}
+
+/* Typography scale — tighter, heavier, more considered. */
+html.theme-redesign h1,
+html.theme-redesign h2,
+html.theme-redesign h3 {
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+html.theme-redesign h1 {
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+/* Body text — slightly lighter, improved line-height. */
+html.theme-redesign p {
+  line-height: 1.55;
+  max-width: 65ch;
+  text-wrap: pretty;
+}
+
+/* All numbers use IBM Plex Mono with tabular figures. */
+html.theme-redesign .font-mono,
+html.theme-redesign .num {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", monospace !important;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  letter-spacing: -0.01em;
+}
+
+/* Color token overrides. */
+html.theme-redesign .bg-bg {
+  background-color: var(--fb-bg) !important;
+}
+html.theme-redesign .bg-panel {
+  background-color: var(--fb-panel) !important;
+}
+html.theme-redesign .bg-panel2 {
+  background-color: var(--fb-panel2) !important;
+}
+html.theme-redesign .bg-border {
+  background-color: var(--fb-border) !important;
+}
+html.theme-redesign .text-ink {
+  color: var(--fb-ink) !important;
+}
+html.theme-redesign .text-muted {
+  color: var(--fb-muted) !important;
+}
+html.theme-redesign .text-dim {
+  color: var(--fb-dim) !important;
+}
+html.theme-redesign .text-accent {
+  color: var(--fb-accent) !important;
+}
+html.theme-redesign .text-up {
+  color: var(--fb-up) !important;
+}
+html.theme-redesign .text-down {
+  color: var(--fb-down) !important;
+}
+html.theme-redesign .text-warn {
+  color: var(--fb-warn) !important;
+}
+html.theme-redesign .border-border {
+  border-color: var(--fb-border) !important;
+}
+html.theme-redesign .border-accent,
+html.theme-redesign .border-accent\/40,
+html.theme-redesign .border-accent\/60,
+html.theme-redesign .border-accent\/30 {
+  border-color: var(--fb-accent) !important;
+}
+html.theme-redesign .bg-up\/15 {
+  background-color: rgba(107, 191, 138, 0.14) !important;
+}
+html.theme-redesign .bg-down\/15 {
+  background-color: rgba(217, 119, 102, 0.14) !important;
+}
+html.theme-redesign .bg-warn\/15 {
+  background-color: rgba(232, 194, 106, 0.14) !important;
+}
+html.theme-redesign .bg-up {
+  background-color: var(--fb-up) !important;
+}
+html.theme-redesign .bg-down {
+  background-color: var(--fb-down) !important;
+}
+html.theme-redesign .bg-warn {
+  background-color: var(--fb-warn) !important;
+}
+html.theme-redesign .bg-accent {
+  background-color: var(--fb-accent) !important;
+}
+html.theme-redesign .border-up\/30 {
+  border-color: rgba(107, 191, 138, 0.4) !important;
+}
+html.theme-redesign .border-down\/30 {
+  border-color: rgba(217, 119, 102, 0.45) !important;
+}
+html.theme-redesign .border-warn\/30 {
+  border-color: rgba(232, 194, 106, 0.4) !important;
+}
+
+/* Softer, rounder surfaces with warm-tinted shadow. */
+html.theme-redesign section,
+html.theme-redesign [class*="bg-panel"] {
+  border-color: var(--fb-border-soft) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 240, 220, 0.025) inset,
+    0 12px 32px -16px rgba(0, 0, 0, 0.5);
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+
+/* Inner containers get a tighter radius for hierarchy. */
+html.theme-redesign .rounded-md {
+  border-radius: 10px !important;
+}
+html.theme-redesign .rounded-sm {
+  border-radius: 6px !important;
+}
+
+/* Header — smoother blur, hairline border. */
+html.theme-redesign .fb-header {
+  background: rgba(11, 10, 9, 0.72) !important;
+  border-bottom-color: var(--fb-border-soft) !important;
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+}
+
+/* Inputs — refined border + focus ring. */
+html.theme-redesign input {
+  background: var(--fb-panel) !important;
+  border-color: var(--fb-border) !important;
+  color: var(--fb-ink) !important;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+html.theme-redesign input:hover {
+  border-color: var(--fb-border-hover) !important;
+}
+html.theme-redesign input:focus {
+  outline: none;
+  border-color: var(--fb-accent) !important;
+  box-shadow: 0 0 0 3px var(--fb-accent-soft);
+}
+
+/* Buttons — two tiers: filled (primary) + ghost. */
+html.theme-redesign button {
+  transition: background-color 180ms ease, border-color 180ms ease,
+    color 180ms ease, transform 120ms ease;
+}
+html.theme-redesign button:active {
+  transform: translateY(1px);
+}
+html.theme-redesign .bg-accent {
+  color: #1a1410 !important;
+}
+html.theme-redesign button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--fb-accent-soft);
+}
+
+/* Links — subtle underline, never the blue-purple gradient default. */
+html.theme-redesign a {
+  transition: color 180ms ease;
+}
+html.theme-redesign a:hover {
+  color: var(--fb-accent) !important;
+}
+html.theme-redesign .hover\:text-accent:hover,
+html.theme-redesign .hover\:border-accent:hover {
+  color: var(--fb-accent) !important;
+  border-color: var(--fb-accent) !important;
+}
+
+/* Pills / badges — softer rounding, no loud fill. */
+html.theme-redesign .fb-verdict {
+  border-radius: 999px !important;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  padding: 0.35rem 0.85rem;
+}
+
+/* Example-ticker / watchlist pills — lifted hover. */
+html.theme-redesign a.inline-block {
+  transition: border-color 180ms ease, color 180ms ease, transform 200ms ease,
+    background-color 220ms ease;
+}
+html.theme-redesign a.inline-block:hover {
+  transform: translateY(-1px);
+  background-color: var(--fb-panel2) !important;
+}
+
+/* Score bar gets a gradient tint. */
+html.theme-redesign .fb-score-bar {
+  background: var(--fb-border) !important;
+  border-radius: 999px !important;
+}
+html.theme-redesign .fb-score-bar > div {
+  border-radius: 999px !important;
+}
+
+/* Section-title tracking cleanup. */
+html.theme-redesign .uppercase.tracking-wider {
+  letter-spacing: 0.11em;
+}
+
+/* Hero headline — editorial scale. */
+html.theme-redesign h1.text-3xl,
+html.theme-redesign h1.md\:text-5xl {
+  font-size: clamp(2.25rem, 5.5vw, 4.25rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+/* Accent underline for highlighted words in the hero. */
+html.theme-redesign h1 .text-accent {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 72%,
+    var(--fb-accent-soft) 72%,
+    var(--fb-accent-soft) 100%
+  );
+  padding-inline: 0.08em;
+}
+
+/* Price chart legend text alignment. */
+html.theme-redesign .font-mono.text-3xl,
+html.theme-redesign .font-mono.text-5xl {
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+/* News list rows — cleaner hover. */
+html.theme-redesign ul li a:hover {
+  background-color: var(--fb-panel2) !important;
 }

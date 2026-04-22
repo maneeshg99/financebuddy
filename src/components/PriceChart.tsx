@@ -15,26 +15,40 @@ import type { ChartPoint } from "@/lib/types";
 type Range = "1M" | "3M" | "1Y" | "5Y";
 const RANGES: Range[] = ["1M", "3M", "1Y", "5Y"];
 
-function useBrutal() {
-  const [brutal, setBrutal] = useState(false);
+type ThemeName = "default" | "redesign" | "brutal";
+
+function useTheme(): ThemeName {
+  const [theme, setTheme] = useState<ThemeName>("default");
   useEffect(() => {
-    const read = () => setBrutal(document.documentElement.classList.contains("theme-brutal"));
+    const read = () => {
+      const cl = document.documentElement.classList;
+      setTheme(cl.contains("theme-brutal") ? "brutal" : cl.contains("theme-redesign") ? "redesign" : "default");
+    };
     read();
     const mo = new MutationObserver(read);
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
     return () => mo.disconnect();
   }, []);
-  return brutal;
+  return theme;
 }
+
+const CHART_COLORS: Record<ThemeName, {
+  price: string; ma50: string; ma200: string;
+  grid: string; axis: string;
+  tip: string; tipBorder: string; tipInk: string; tipLabel: string;
+}> = {
+  default: { price: "#7dd3fc", ma50: "#facc15", ma200: "#ef4444", grid: "#1f2937", axis: "#6b7280", tip: "#141c28", tipBorder: "#1f2937", tipInk: "#e5e7eb", tipLabel: "#9ca3af" },
+  redesign: { price: "#e8b86a", ma50: "#b3ab9f", ma200: "#d97766", grid: "#2a2420", axis: "#6d665c", tip: "#14110d", tipBorder: "#2a2420", tipInk: "#f5f2ec", tipLabel: "#b3ab9f" },
+  brutal:  { price: "#eaeaea", ma50: "#e6b919", ma200: "#e61919", grid: "#2a2a2a", axis: "#5c5c5c", tip: "#101010", tipBorder: "#2a2a2a", tipInk: "#eaeaea", tipLabel: "#9a9a9a" },
+};
 
 export default function PriceChart({ symbol }: { symbol: string }) {
   const [range, setRange] = useState<Range>("1Y");
   const [data, setData] = useState<ChartPoint[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
-  const brutal = useBrutal();
-  const colors = brutal
-    ? { price: "#eaeaea", ma50: "#e6b919", ma200: "#e61919", grid: "#2a2a2a", axis: "#5c5c5c", tip: "#101010", tipBorder: "#2a2a2a", tipInk: "#eaeaea", tipLabel: "#9a9a9a" }
-    : { price: "#7dd3fc", ma50: "#facc15", ma200: "#ef4444", grid: "#1f2937", axis: "#6b7280", tip: "#141c28", tipBorder: "#1f2937", tipInk: "#e5e7eb", tipLabel: "#9ca3af" };
+  const theme = useTheme();
+  const brutal = theme === "brutal";
+  const colors = CHART_COLORS[theme];
 
   useEffect(() => {
     let alive = true;
