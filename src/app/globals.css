@@ -66,15 +66,19 @@ html.theme-redesign span.fb-redesign-only {
    =========================================================== */
 
 html.theme-brutal {
-  --fb-bg: #0a0a0a;
-  --fb-panel: #101010;
-  --fb-panel2: #161616;
-  --fb-border: #2a2a2a;
-  --fb-border-strong: #3a3a3a;
+  --fb-bg: #060a06;
+  --fb-panel: #0b120b;
+  --fb-panel2: #0f1a0f;
+  --fb-border: #183318;
+  --fb-border-strong: #2a5a2a;
+  --fb-border-hover: #3d7a3d;
+  --fb-btn-bg: #0e1a0e;
+  --fb-btn-bg-hover: #132713;
   --fb-ink: #eaeaea;
-  --fb-muted: #9a9a9a;
-  --fb-dim: #5c5c5c;
-  --fb-accent: #e61919;
+  --fb-muted: #9ab89a;
+  --fb-dim: #5c7a5c;
+  --fb-accent: #4af626;
+  --fb-accent-dim: #2ea01a;
   --fb-up: #4af626;
   --fb-down: #e61919;
   --fb-warn: #e6b919;
@@ -226,9 +230,16 @@ html.theme-brutal .fb-header {
 /* Buttons, inputs, links get pure geometry. */
 html.theme-brutal input,
 html.theme-brutal button {
-  background: var(--fb-panel) !important;
+  background: var(--fb-btn-bg) !important;
   border: 1px solid var(--fb-border-strong) !important;
   color: var(--fb-ink) !important;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+html.theme-brutal button:hover,
+html.theme-brutal a.inline-block:hover {
+  background: var(--fb-btn-bg-hover) !important;
+  border-color: var(--fb-border-hover) !important;
 }
 
 html.theme-brutal input:focus,
@@ -236,13 +247,25 @@ html.theme-brutal button:focus-visible {
   outline: 1px solid var(--fb-accent) !important;
   outline-offset: 1px;
   border-color: var(--fb-accent) !important;
+  box-shadow: 0 0 0 2px rgba(74, 246, 38, 0.18);
+}
+
+/* Primary accent button (e.g. Search's "Go" button) sits on phosphor green. */
+html.theme-brutal .bg-accent {
+  background: var(--fb-accent) !important;
+  color: #061006 !important;
+  border-color: var(--fb-accent) !important;
+}
+html.theme-brutal .bg-accent:hover {
+  background: #6cff4a !important;
+  border-color: #6cff4a !important;
 }
 
 html.theme-brutal a:hover {
   color: var(--fb-accent) !important;
 }
 
-/* The example-ticker pills and watchlist rows lose hover-color glow. */
+/* The example-ticker pills and watchlist rows — green-glow hover. */
 html.theme-brutal .hover\:text-accent:hover,
 html.theme-brutal .hover\:border-accent:hover {
   color: var(--fb-accent) !important;
@@ -267,10 +290,10 @@ html.theme-brutal .fb-scanlines {
     0deg,
     rgba(0, 0, 0, 0) 0px,
     rgba(0, 0, 0, 0) 2px,
-    rgba(255, 255, 255, 0.025) 2px,
-    rgba(255, 255, 255, 0.025) 3px
+    rgba(74, 246, 38, 0.035) 2px,
+    rgba(74, 246, 38, 0.035) 3px
   );
-  mix-blend-mode: overlay;
+  mix-blend-mode: screen;
 }
 
 /* Subtle phosphor vignette around the viewport edges. */
@@ -280,11 +303,9 @@ html.theme-brutal body::before {
   inset: 0;
   pointer-events: none;
   z-index: 30;
-  background: radial-gradient(
-    ellipse at center,
-    transparent 55%,
-    rgba(0, 0, 0, 0.45) 100%
-  );
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.5) 100%),
+    radial-gradient(ellipse at 50% 0%, rgba(74, 246, 38, 0.04), transparent 40%);
 }
 
 /* ASCII bracket framing hook.

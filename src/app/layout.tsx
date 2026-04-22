@@ -10,16 +10,16 @@ export const metadata: Metadata = {
 const NO_FLASH_SCRIPT = `(() => {
   try {
     var t = localStorage.getItem("fb:theme");
-    if (t !== "brutal" && t !== "redesign") t = "default";
+    if (t !== "default" && t !== "redesign") t = "brutal";
     document.documentElement.classList.add("theme-" + t);
   } catch (e) {
-    document.documentElement.classList.add("theme-default");
+    document.documentElement.classList.add("theme-brutal");
   }
 })();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="theme-default">
+    <html lang="en" className="theme-brutal">
       <head>
         <script dangerouslySetInnerHTML={{ __html: NO_FLASH_SCRIPT }} />
       </head>

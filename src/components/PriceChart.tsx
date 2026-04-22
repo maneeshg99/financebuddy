@@ -39,7 +39,7 @@ const CHART_COLORS: Record<ThemeName, {
 }> = {
   default: { price: "#7dd3fc", ma50: "#facc15", ma200: "#ef4444", grid: "#1f2937", axis: "#6b7280", tip: "#141c28", tipBorder: "#1f2937", tipInk: "#e5e7eb", tipLabel: "#9ca3af" },
   redesign: { price: "#e8b86a", ma50: "#b3ab9f", ma200: "#d97766", grid: "#2a2420", axis: "#6d665c", tip: "#14110d", tipBorder: "#2a2420", tipInk: "#f5f2ec", tipLabel: "#b3ab9f" },
-  brutal:  { price: "#eaeaea", ma50: "#e6b919", ma200: "#e61919", grid: "#2a2a2a", axis: "#5c5c5c", tip: "#101010", tipBorder: "#2a2a2a", tipInk: "#eaeaea", tipLabel: "#9a9a9a" },
+  brutal:  { price: "#4af626", ma50: "#e6b919", ma200: "#eaeaea", grid: "#183318", axis: "#5c7a5c", tip: "#0b120b", tipBorder: "#2a5a2a", tipInk: "#eaeaea", tipLabel: "#9ab89a" },
 };
 
 export default function PriceChart({ symbol }: { symbol: string }) {

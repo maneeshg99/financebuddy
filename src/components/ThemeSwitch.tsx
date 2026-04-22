@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 
 export type Theme = "default" | "redesign" | "brutal";
 const STORAGE_KEY = "fb:theme";
-const ORDER: Theme[] = ["default", "redesign", "brutal"];
+const ORDER: Theme[] = ["brutal", "redesign", "default"];
 
 function sanitize(v: string | null): Theme {
-  return v === "redesign" || v === "brutal" ? v : "default";
+  return v === "default" || v === "redesign" ? v : "brutal";
 }
 
 function applyTheme(t: Theme) {
@@ -24,9 +24,9 @@ const LABEL: Record<Theme, string> = {
 };
 
 const TITLE: Record<Theme, string> = {
-  default: "Switch to redesign theme",
-  redesign: "Switch to brutalist terminal theme",
-  brutal: "Switch back to default theme",
+  brutal: "Switch to redesign theme",
+  redesign: "Switch to default theme",
+  default: "Switch back to terminal theme",
 };
 
 export default function ThemeSwitch() {
