@@ -8,8 +8,15 @@ export default function Home() {
   return (
     <div className="space-y-8">
       <section className="text-center py-12">
+        <div className="fb-brutal-only font-mono text-[10px] uppercase tracking-[0.3em] text-dim mb-4">
+          {"/// UNIT FB-01 /// TERMINAL HOME /// READY"}
+        </div>
         <h1 className="text-3xl md:text-5xl font-semibold text-ink">
-          One ticker. <span className="text-accent">Full picture.</span>
+          <span className="fb-default-only">One ticker. <span className="text-accent">Full picture.</span></span>
+          <span className="fb-brutal-only">
+            {"ONE TICKER /// "}
+            <span className="text-accent">FULL PICTURE</span>
+          </span>
         </h1>
         <p className="text-muted mt-3 max-w-xl mx-auto">
           Type a ticker. Get a snapshot, composite 0-100 score, fair value band, metrics, and catalysts — all on one page.
@@ -18,6 +25,9 @@ export default function Home() {
           <SearchBar />
         </div>
         <div className="mt-4 flex items-center justify-center gap-2 flex-wrap">
+          <span className="fb-brutal-only font-mono text-[10px] uppercase tracking-[0.25em] text-dim mr-2">
+            [ EXAMPLES ]
+          </span>
           {EXAMPLES.map((s) => (
             <Link
               key={s}

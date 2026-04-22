@@ -1,16 +1,28 @@
 import Link from "next/link";
 import SearchBar from "./SearchBar";
+import ThemeSwitch from "./ThemeSwitch";
 
 export default function Header() {
   return (
-    <header className="border-b border-border bg-bg/90 backdrop-blur sticky top-0 z-10">
+    <header className="fb-header border-b border-border bg-bg/90 backdrop-blur sticky top-0 z-10">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-4">
         <Link href="/" className="flex items-center gap-2">
+          <span className="fb-brutal-only font-mono text-xs uppercase tracking-wider text-dim hidden md:inline">
+            [ FB-01 ]
+          </span>
           <span className="text-accent font-mono text-sm tracking-wider">FB</span>
           <span className="text-ink text-sm font-semibold">FinanceBuddy</span>
         </Link>
         <div className="flex-1 max-w-md">
           <SearchBar compact />
+        </div>
+        <ThemeSwitch />
+      </div>
+      <div className="fb-brutal-only border-t border-border bg-panel2/40">
+        <div className="max-w-6xl mx-auto px-4 py-1 flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.18em] text-dim overflow-hidden">
+          <span className="truncate">{"/// UNIT FB-01 /// STATUS: NOMINAL /// REV 0.1"}</span>
+          <span className="whitespace-nowrap hidden sm:inline">+ + + + + + + +</span>
+          <span className="whitespace-nowrap">CH.A ONLINE</span>
         </div>
       </div>
     </header>

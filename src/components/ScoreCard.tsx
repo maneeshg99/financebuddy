@@ -6,11 +6,19 @@ function SubCard({ sub }: { sub: SubScore }) {
   return (
     <div className="rounded-md border border-border bg-panel2 p-4">
       <div className="flex items-baseline justify-between">
-        <div className="text-muted text-xs uppercase tracking-wider">{sub.pillar}</div>
-        <div className="text-dim text-xs">weight {(sub.weight * 100).toFixed(0)}%</div>
+        <div className="text-muted text-xs uppercase tracking-wider">
+          <span className="fb-brutal-only text-dim">[ </span>
+          {sub.pillar}
+          <span className="fb-brutal-only text-dim"> ]</span>
+        </div>
+        <div className="text-dim text-xs">
+          <span className="fb-brutal-only">W=</span>
+          <span className="fb-default-only">weight </span>
+          {(sub.weight * 100).toFixed(0)}%
+        </div>
       </div>
       <div className={`font-mono text-3xl mt-1 ${scoreClass(s)}`}>{s ?? "—"}<span className="text-dim text-base">/100</span></div>
-      <div className="w-full h-1.5 bg-border rounded-full mt-2 overflow-hidden">
+      <div className="w-full h-1.5 bg-border fb-score-bar rounded-full mt-2 overflow-hidden">
         <div
           className={`h-full ${scoreBg(s)}`}
           style={{ width: s !== null ? `${Math.max(0, Math.min(100, s))}%` : "0%" }}
@@ -43,7 +51,12 @@ export default function ScoreCard({ report }: { report: ScoreReport }) {
     <section className="rounded-md border border-border bg-panel p-5">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <div className="text-muted text-xs uppercase tracking-wider">FinanceBuddy Score</div>
+          <div className="text-muted text-xs uppercase tracking-wider">
+            <span className="fb-brutal-only text-dim">[ </span>
+            <span className="fb-default-only">FinanceBuddy Score</span>
+            <span className="fb-brutal-only">COMPOSITE SCORE /// FB-01</span>
+            <span className="fb-brutal-only text-dim"> ]</span>
+          </div>
           <div className="flex items-baseline gap-3 mt-1">
             <div className={`font-mono text-5xl font-semibold ${scoreClass(c)}`}>
               {c ?? "—"}

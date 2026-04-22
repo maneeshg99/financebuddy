@@ -26,6 +26,10 @@ function HeaderStrip({
 }) {
   return (
     <section className="rounded-md border border-border bg-panel p-5">
+      <div className="fb-brutal-only font-mono text-[10px] uppercase tracking-[0.25em] text-dim mb-3 flex items-center justify-between">
+        <span>{`/// TARGET ACQUIRED /// SYM = ${snap.symbol}`}</span>
+        <span>{"CH-A ● LIVE"}</span>
+      </div>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div className="flex items-baseline gap-3">

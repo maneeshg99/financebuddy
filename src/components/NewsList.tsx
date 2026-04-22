@@ -13,9 +13,15 @@ export default function NewsList({
   return (
     <section className="rounded-md border border-border bg-panel p-5">
       <div className="flex items-baseline justify-between mb-3">
-        <div className="text-muted text-xs uppercase tracking-wider">News & Catalysts</div>
+        <div className="text-muted text-xs uppercase tracking-wider">
+          <span className="fb-brutal-only text-dim">[ </span>
+          <span className="fb-default-only">News &amp; Catalysts</span>
+          <span className="fb-brutal-only">FEED /// CATALYSTS</span>
+          <span className="fb-brutal-only text-dim"> ]</span>
+        </div>
         <div className="text-sm text-muted">
-          Next earnings:{" "}
+          <span className="fb-default-only">Next earnings: </span>
+          <span className="fb-brutal-only text-dim">NEXT-EPS /// </span>
           <span className="font-mono text-ink">{nextEarnings ? fmtDate(nextEarnings) : "—"}</span>
         </div>
       </div>

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=VT323&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,4 +25,303 @@ body {
   font-variant-numeric: tabular-nums;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
+}
+
+/* -----------------------------------------------------------
+   Default-theme baseline for brutal-only UI elements.
+   Hidden whenever the brutal theme is NOT active.
+   ----------------------------------------------------------- */
+.fb-brutal-only {
+  display: none;
+}
+html.theme-default .fb-scanlines,
+html.theme-default .fb-brutal-only {
+  display: none !important;
+}
+
+/* Scanline / noise overlay container is injected globally in layout.tsx.
+   It gets actual styling only under .theme-brutal. */
+.fb-scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  display: none;
+}
+
+/* ===========================================================
+   .theme-brutal — Tactical Telemetry / CRT Terminal
+   =========================================================== */
+
+html.theme-brutal {
+  --fb-bg: #0a0a0a;
+  --fb-panel: #101010;
+  --fb-panel2: #161616;
+  --fb-border: #2a2a2a;
+  --fb-border-strong: #3a3a3a;
+  --fb-ink: #eaeaea;
+  --fb-muted: #9a9a9a;
+  --fb-dim: #5c5c5c;
+  --fb-accent: #e61919;
+  --fb-up: #4af626;
+  --fb-down: #e61919;
+  --fb-warn: #e6b919;
+  color-scheme: dark;
+}
+
+html.theme-brutal,
+html.theme-brutal body {
+  background: var(--fb-bg);
+  color: var(--fb-ink);
+}
+
+html.theme-brutal body {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  letter-spacing: 0.02em;
+}
+
+/* Kill all rounding. */
+html.theme-brutal *,
+html.theme-brutal *::before,
+html.theme-brutal *::after {
+  border-radius: 0 !important;
+}
+
+/* Rewrite Tailwind color utility classes via var-driven overrides. */
+html.theme-brutal .bg-bg {
+  background-color: var(--fb-bg) !important;
+}
+html.theme-brutal .bg-panel {
+  background-color: var(--fb-panel) !important;
+}
+html.theme-brutal .bg-panel2 {
+  background-color: var(--fb-panel2) !important;
+}
+html.theme-brutal .bg-border {
+  background-color: var(--fb-border) !important;
+}
+html.theme-brutal .text-ink {
+  color: var(--fb-ink) !important;
+}
+html.theme-brutal .text-muted {
+  color: var(--fb-muted) !important;
+}
+html.theme-brutal .text-dim {
+  color: var(--fb-dim) !important;
+}
+html.theme-brutal .text-accent {
+  color: var(--fb-accent) !important;
+}
+html.theme-brutal .text-up {
+  color: var(--fb-up) !important;
+}
+html.theme-brutal .text-down {
+  color: var(--fb-down) !important;
+}
+html.theme-brutal .text-warn {
+  color: var(--fb-warn) !important;
+}
+html.theme-brutal .border-border {
+  border-color: var(--fb-border) !important;
+}
+html.theme-brutal .border-accent {
+  border-color: var(--fb-accent) !important;
+}
+html.theme-brutal .border-accent\/40,
+html.theme-brutal .border-accent\/60,
+html.theme-brutal .border-accent\/30 {
+  border-color: var(--fb-accent) !important;
+}
+html.theme-brutal .bg-up\/15 {
+  background-color: rgba(74, 246, 38, 0.12) !important;
+}
+html.theme-brutal .bg-down\/15 {
+  background-color: rgba(230, 25, 25, 0.14) !important;
+}
+html.theme-brutal .bg-warn\/15 {
+  background-color: rgba(230, 185, 25, 0.14) !important;
+}
+html.theme-brutal .bg-up {
+  background-color: var(--fb-up) !important;
+}
+html.theme-brutal .bg-down {
+  background-color: var(--fb-down) !important;
+}
+html.theme-brutal .bg-warn {
+  background-color: var(--fb-warn) !important;
+}
+html.theme-brutal .border-up\/30 {
+  border-color: rgba(74, 246, 38, 0.45) !important;
+}
+html.theme-brutal .border-down\/30 {
+  border-color: rgba(230, 25, 25, 0.55) !important;
+}
+html.theme-brutal .border-warn\/30 {
+  border-color: rgba(230, 185, 25, 0.55) !important;
+}
+
+/* Every panel-like container gets a thicker border + sharp corners. */
+html.theme-brutal section,
+html.theme-brutal .fb-panel,
+html.theme-brutal [class*="bg-panel"] {
+  border-color: var(--fb-border-strong) !important;
+  border-width: 1px !important;
+  box-shadow: none !important;
+}
+
+/* Monospace everything by default in brutal mode. */
+html.theme-brutal button,
+html.theme-brutal input,
+html.theme-brutal a,
+html.theme-brutal span,
+html.theme-brutal div,
+html.theme-brutal h1,
+html.theme-brutal h2,
+html.theme-brutal h3,
+html.theme-brutal h4,
+html.theme-brutal p,
+html.theme-brutal li,
+html.theme-brutal label {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+  letter-spacing: 0.02em;
+}
+
+/* Large structural headings: still mono, but tight + heavy. */
+html.theme-brutal h1,
+html.theme-brutal h2 {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+}
+
+/* Force structural labels to uppercase + wider tracking. */
+html.theme-brutal .text-xs,
+html.theme-brutal .text-sm {
+  letter-spacing: 0.08em;
+}
+
+/* Header tightened. */
+html.theme-brutal .fb-header {
+  background: var(--fb-bg) !important;
+  border-bottom-color: var(--fb-border-strong) !important;
+  backdrop-filter: none !important;
+}
+
+/* Buttons, inputs, links get pure geometry. */
+html.theme-brutal input,
+html.theme-brutal button {
+  background: var(--fb-panel) !important;
+  border: 1px solid var(--fb-border-strong) !important;
+  color: var(--fb-ink) !important;
+}
+
+html.theme-brutal input:focus,
+html.theme-brutal button:focus-visible {
+  outline: 1px solid var(--fb-accent) !important;
+  outline-offset: 1px;
+  border-color: var(--fb-accent) !important;
+}
+
+html.theme-brutal a:hover {
+  color: var(--fb-accent) !important;
+}
+
+/* The example-ticker pills and watchlist rows lose hover-color glow. */
+html.theme-brutal .hover\:text-accent:hover,
+html.theme-brutal .hover\:border-accent:hover {
+  color: var(--fb-accent) !important;
+  border-color: var(--fb-accent) !important;
+}
+
+/* Brutal-only visibility helpers. */
+html.theme-brutal .fb-brutal-only {
+  display: block;
+}
+html.theme-brutal span.fb-brutal-only {
+  display: inline;
+}
+html.theme-brutal .fb-default-only {
+  display: none !important;
+}
+
+/* CRT scanline overlay. */
+html.theme-brutal .fb-scanlines {
+  display: block;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(255, 255, 255, 0.025) 2px,
+    rgba(255, 255, 255, 0.025) 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* Subtle phosphor vignette around the viewport edges. */
+html.theme-brutal body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
+
+/* ASCII bracket framing hook.
+   Any element with data-bracket="LABEL" gets [ LABEL ] prefix/suffix in brutal mode. */
+html.theme-brutal [data-bracket]::before {
+  content: "[ ";
+  color: var(--fb-dim);
+}
+html.theme-brutal [data-bracket]::after {
+  content: " ]";
+  color: var(--fb-dim);
+}
+
+/* Divider lines between rows become crisp 1px dashes. */
+html.theme-brutal hr,
+html.theme-brutal .fb-rule {
+  border: 0;
+  border-top: 1px dashed var(--fb-border-strong);
+}
+
+/* Theme switch button — identical geometry, different label text per theme. */
+.fb-theme-switch {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+/* Watchlist / news / metrics rows — tighten the "card" look. */
+html.theme-brutal .rounded-md,
+html.theme-brutal .rounded-full,
+html.theme-brutal .rounded-lg,
+html.theme-brutal .rounded-sm,
+html.theme-brutal .rounded {
+  border-radius: 0 !important;
+}
+
+/* Progress bar: make it a hard-edged block. */
+html.theme-brutal .fb-score-bar {
+  background: var(--fb-border) !important;
+}
+
+/* Verdict pill becomes a monospaced tag. */
+html.theme-brutal .fb-verdict {
+  border-radius: 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+/* Score digit + fair-value digits: oversized + tabular. */
+html.theme-brutal .font-mono {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-feature-settings: "tnum" 1, "zero" 1;
 }

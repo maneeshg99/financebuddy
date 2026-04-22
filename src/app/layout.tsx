@@ -7,13 +7,30 @@ export const metadata: Metadata = {
   description: "Single-ticker dashboard with a composite 0-100 score, fair value band, and catalysts.",
 };
 
+const NO_FLASH_SCRIPT = `(() => {
+  try {
+    var t = localStorage.getItem("fb:theme");
+    if (t !== "brutal") t = "default";
+    document.documentElement.classList.add("theme-" + t);
+  } catch (e) {
+    document.documentElement.classList.add("theme-default");
+  }
+})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="theme-default">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: NO_FLASH_SCRIPT }} />
+      </head>
       <body className="min-h-screen bg-bg text-ink">
+        <div className="fb-scanlines" aria-hidden="true" />
         <Header />
         <main className="max-w-6xl mx-auto px-4 py-6">{children}</main>
         <footer className="max-w-6xl mx-auto px-4 py-8 text-xs text-dim">
+          <div className="fb-brutal-only font-mono uppercase tracking-wider mb-2 text-dim">
+            {"[ END OF TRANSMISSION ]   /// REV 0.1   /// UNIT FB-01   /// © 2026"}
+          </div>
           Data: Yahoo Finance (via yahoo-finance2) · News: Finnhub · For personal research use. Not investment advice.
         </footer>
       </body>

@@ -9,7 +9,7 @@ function VerdictPill({ v }: { v: FairValue["verdict"] }) {
     "Insufficient data": "bg-panel2 text-muted border-border",
   };
   return (
-    <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${styles[v]}`}>
+    <span className={`fb-verdict inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${styles[v]}`}>
       {v}
     </span>
   );
@@ -40,7 +40,12 @@ export default function FairValueCard({
     <section className="rounded-md border border-border bg-panel p-5">
       <div className="flex items-baseline justify-between mb-4">
         <div>
-          <div className="text-muted text-xs uppercase tracking-wider">Fair Value</div>
+          <div className="text-muted text-xs uppercase tracking-wider">
+            <span className="fb-brutal-only text-dim">[ </span>
+            <span className="fb-default-only">Fair Value</span>
+            <span className="fb-brutal-only">FAIR VALUE /// VAL-02</span>
+            <span className="fb-brutal-only text-dim"> ]</span>
+          </div>
           <div className="mt-1 flex items-baseline gap-3">
             <VerdictPill v={verdict} />
             {upsidePct !== null ? (
@@ -52,22 +57,31 @@ export default function FairValueCard({
           </div>
         </div>
         <div className="text-right">
-          <div className="text-dim text-xs">Current price</div>
+          <div className="text-dim text-xs">
+            <span className="fb-default-only">Current price</span>
+            <span className="fb-brutal-only">LAST /// PX</span>
+          </div>
           <div className="font-mono text-xl text-ink">{fmtMoney(price)}</div>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3">
         <div className="rounded-md border border-border bg-panel2 p-3 text-center">
-          <div className="text-xs text-muted uppercase tracking-wider">Low</div>
+          <div className="text-xs text-muted uppercase tracking-wider">
+            <span className="fb-brutal-only text-dim">&lt; </span>LOW<span className="fb-brutal-only text-dim"> &gt;</span>
+          </div>
           <div className="font-mono text-lg text-ink">{fmtMoney(low)}</div>
         </div>
         <div className="rounded-md border border-accent/40 bg-panel2 p-3 text-center">
-          <div className="text-xs text-accent uppercase tracking-wider">Mid</div>
+          <div className="text-xs text-accent uppercase tracking-wider">
+            <span className="fb-brutal-only">&gt;&gt; </span>MID<span className="fb-brutal-only"> &lt;&lt;</span>
+          </div>
           <div className="font-mono text-lg text-ink">{fmtMoney(mid)}</div>
         </div>
         <div className="rounded-md border border-border bg-panel2 p-3 text-center">
-          <div className="text-xs text-muted uppercase tracking-wider">High</div>
+          <div className="text-xs text-muted uppercase tracking-wider">
+            <span className="fb-brutal-only text-dim">&lt; </span>HIGH<span className="fb-brutal-only text-dim"> &gt;</span>
+          </div>
           <div className="font-mono text-lg text-ink">{fmtMoney(high)}</div>
         </div>
       </div>
@@ -94,7 +108,12 @@ export default function FairValueCard({
       ) : null}
 
       <div className="mt-5 border-t border-border pt-4">
-        <div className="text-xs uppercase tracking-wider text-muted mb-2">Estimates</div>
+        <div className="text-xs uppercase tracking-wider text-muted mb-2">
+          <span className="fb-brutal-only text-dim">[ </span>
+          <span className="fb-default-only">Estimates</span>
+          <span className="fb-brutal-only">METHODS /// N=5</span>
+          <span className="fb-brutal-only text-dim"> ]</span>
+        </div>
         <ul className="space-y-1 text-sm">
           {estimates.map((e) => (
             <li key={e.method} className="flex items-baseline justify-between gap-3">
