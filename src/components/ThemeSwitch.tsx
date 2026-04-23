@@ -2,43 +2,29 @@
 
 import { useEffect, useState } from "react";
 
-export type Theme = "default" | "redesign" | "brutal" | "taste" | "bloomberg";
+export type Theme = "bbg-v1" | "bbg-v2";
 const STORAGE_KEY = "fb:theme";
-const ORDER: Theme[] = ["brutal", "bloomberg", "redesign", "taste", "default"];
+const ORDER: Theme[] = ["bbg-v1", "bbg-v2"];
 
 function sanitize(v: string | null): Theme {
-  return v === "default" || v === "redesign" || v === "taste" || v === "bloomberg"
-    ? v
-    : "brutal";
+  return v === "bbg-v2" ? "bbg-v2" : "bbg-v1";
 }
 
 function applyTheme(t: Theme) {
   if (typeof document === "undefined") return;
   const html = document.documentElement;
-  html.classList.remove(
-    "theme-default",
-    "theme-redesign",
-    "theme-brutal",
-    "theme-taste",
-    "theme-bloomberg"
-  );
+  html.classList.remove("theme-bbg-v1", "theme-bbg-v2");
   html.classList.add(`theme-${t}`);
 }
 
 const LABEL: Record<Theme, string> = {
-  brutal: "[ TERMINAL ]",
-  bloomberg: "<GO> BBG",
-  redesign: "/ REDESIGN",
-  taste: "· TASTE",
-  default: "// DEFAULT",
+  "bbg-v1": "<BBG V1>",
+  "bbg-v2": "<BBG V2>",
 };
 
 const TITLE: Record<Theme, string> = {
-  brutal: "Switch to Bloomberg theme",
-  bloomberg: "Switch to redesign theme",
-  redesign: "Switch to taste theme",
-  taste: "Switch to default theme",
-  default: "Switch back to terminal theme",
+  "bbg-v1": "Switch to BBG v2 (dense)",
+  "bbg-v2": "Switch to BBG v1 (classic)",
 };
 
 export default function ThemeSwitch() {
@@ -51,7 +37,7 @@ export default function ThemeSwitch() {
   }, []);
 
   function cycle() {
-    const current = theme ?? "default";
+    const current = theme ?? "bbg-v1";
     const idx = ORDER.indexOf(current);
     const next = ORDER[(idx + 1) % ORDER.length];
     setTheme(next);

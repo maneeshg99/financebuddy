@@ -7,7 +7,7 @@ export default function Header() {
     <header className="fb-header border-b border-border bg-bg/90 backdrop-blur sticky top-0 z-10">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-4">
         <Link href="/" className="flex items-center gap-2">
-          <span className="fb-brutal-only font-mono text-xs uppercase tracking-wider text-dim hidden md:inline">
+          <span className="font-mono text-xs uppercase tracking-wider text-dim hidden md:inline">
             [ FB-01 ]
           </span>
           <span className="text-accent font-mono text-sm tracking-wider">FB</span>
@@ -18,14 +18,7 @@ export default function Header() {
         </div>
         <ThemeSwitch />
       </div>
-      <div className="fb-brutal-only border-t border-border bg-panel2/40">
-        <div className="max-w-6xl mx-auto px-4 py-1 flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.18em] text-dim overflow-hidden">
-          <span className="truncate">{"/// UNIT FB-01 /// STATUS: NOMINAL /// REV 0.1"}</span>
-          <span className="whitespace-nowrap hidden sm:inline">+ + + + + + + +</span>
-          <span className="whitespace-nowrap">CH.A ONLINE</span>
-        </div>
-      </div>
-      <div className="fb-bloomberg-only border-t border-border">
+      <div className="border-t border-border">
         <div className="max-w-6xl mx-auto px-4 py-1 flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-wider overflow-hidden">
           <span className="truncate text-dim">
             <span className="text-accent">{"<HELP>"}</span>

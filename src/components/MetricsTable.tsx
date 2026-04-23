@@ -117,12 +117,8 @@ export default function MetricsTable({ snap }: { snap: Snapshot }) {
       {panels.map((p, i) => (
         <div key={p.title} className="rounded-md border border-border bg-panel p-4">
           <div className="text-muted text-xs uppercase tracking-wider mb-2 flex items-baseline justify-between">
-            <span>
-              <span className="fb-brutal-only text-dim">[ </span>
-              {p.title}
-              <span className="fb-brutal-only text-dim"> ]</span>
-            </span>
-            <span className="fb-brutal-only text-dim font-mono text-[10px]">
+            <span>{p.title}</span>
+            <span className="text-dim font-mono text-[10px]">
               {String(i + 1).padStart(2, "0")}/08
             </span>
           </div>

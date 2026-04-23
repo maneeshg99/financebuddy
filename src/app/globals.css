@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -10,894 +10,52 @@
 
 html,
 body {
-  background: #0a0e14;
-  color: #e5e7eb;
+  background: #000000;
+  color: #f0f0f0;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-    "Noto Sans", sans-serif;
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .num {
   font-variant-numeric: tabular-nums;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
 /* -----------------------------------------------------------
-   Default-theme baseline for brutal-only UI elements.
-   Hidden whenever the brutal theme is NOT active.
+   Visibility helpers for theme-scoped UI fragments.
    ----------------------------------------------------------- */
-.fb-brutal-only,
-.fb-redesign-only,
-.fb-taste-only {
+.fb-v1-only,
+.fb-v2-only {
   display: none;
 }
-html.theme-default .fb-scanlines,
-html.theme-default .fb-brutal-only,
-html.theme-default .fb-redesign-only,
-html.theme-default .fb-taste-only {
-  display: none !important;
-}
-html.theme-redesign .fb-scanlines,
-html.theme-redesign .fb-brutal-only,
-html.theme-redesign .fb-taste-only {
-  display: none !important;
-}
-html.theme-redesign .fb-redesign-only {
+html.theme-bbg-v1 .fb-v1-only {
   display: block;
 }
-html.theme-redesign span.fb-redesign-only {
+html.theme-bbg-v1 span.fb-v1-only {
   display: inline;
 }
-html.theme-taste .fb-scanlines,
-html.theme-taste .fb-brutal-only,
-html.theme-taste .fb-redesign-only {
-  display: none !important;
-}
-html.theme-taste .fb-taste-only {
+html.theme-bbg-v2 .fb-v2-only {
   display: block;
 }
-html.theme-taste span.fb-taste-only {
+html.theme-bbg-v2 span.fb-v2-only {
   display: inline;
 }
 
-/* Scanline / noise overlay container is injected globally in layout.tsx.
-   It gets actual styling only under .theme-brutal. */
-.fb-scanlines {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 40;
-  display: none;
-}
-
 /* ===========================================================
-   .theme-brutal — Tactical Telemetry / CRT Terminal
+   .theme-bbg-v1 — Bloomberg Terminal v1 (classic)
+   Orange accent, yellow press-data digits, cyan links, 8px amber
+   ribbon markers before section headings.
    =========================================================== */
 
-html.theme-brutal {
-  --fb-bg: #050505;
-  --fb-panel: #0c0c0c;
-  --fb-panel2: #121212;
-  --fb-border: #1f3d1f;
-  --fb-border-strong: #2f6b2f;
-  --fb-border-hover: #4a9c4a;
-  --fb-btn-bg: #0c140c;
-  --fb-btn-bg-hover: #142414;
-  --fb-ink: #eaeaea;
-  --fb-muted: #a8b8a8;
-  --fb-dim: #6a7a6a;
-  --fb-accent: #4af626;
-  --fb-accent-dim: #2ea01a;
-  --fb-up: #4af626;
-  --fb-down: #e61919;
-  --fb-warn: #e6b919;
-  color-scheme: dark;
-}
-
-html.theme-brutal,
-html.theme-brutal body {
-  background: var(--fb-bg);
-  color: var(--fb-ink);
-}
-
-html.theme-brutal body {
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", monospace;
-  font-feature-settings: "tnum" 1, "zero" 1;
-  letter-spacing: 0.02em;
-}
-
-/* Kill all rounding. */
-html.theme-brutal *,
-html.theme-brutal *::before,
-html.theme-brutal *::after {
-  border-radius: 0 !important;
-}
-
-/* Rewrite Tailwind color utility classes via var-driven overrides. */
-html.theme-brutal .bg-bg {
-  background-color: var(--fb-bg) !important;
-}
-html.theme-brutal .bg-panel {
-  background-color: var(--fb-panel) !important;
-}
-html.theme-brutal .bg-panel2 {
-  background-color: var(--fb-panel2) !important;
-}
-html.theme-brutal .bg-border {
-  background-color: var(--fb-border) !important;
-}
-html.theme-brutal .text-ink {
-  color: var(--fb-ink) !important;
-}
-html.theme-brutal .text-muted {
-  color: var(--fb-muted) !important;
-}
-html.theme-brutal .text-dim {
-  color: var(--fb-dim) !important;
-}
-html.theme-brutal .text-accent {
-  color: var(--fb-accent) !important;
-}
-html.theme-brutal .text-up {
-  color: var(--fb-up) !important;
-}
-html.theme-brutal .text-down {
-  color: var(--fb-down) !important;
-}
-html.theme-brutal .text-warn {
-  color: var(--fb-warn) !important;
-}
-html.theme-brutal .border-border {
-  border-color: var(--fb-border) !important;
-}
-html.theme-brutal .border-accent {
-  border-color: var(--fb-accent) !important;
-}
-html.theme-brutal .border-accent\/40,
-html.theme-brutal .border-accent\/60,
-html.theme-brutal .border-accent\/30 {
-  border-color: var(--fb-accent) !important;
-}
-html.theme-brutal .bg-up\/15 {
-  background-color: rgba(74, 246, 38, 0.12) !important;
-}
-html.theme-brutal .bg-down\/15 {
-  background-color: rgba(230, 25, 25, 0.14) !important;
-}
-html.theme-brutal .bg-warn\/15 {
-  background-color: rgba(230, 185, 25, 0.14) !important;
-}
-html.theme-brutal .bg-up {
-  background-color: var(--fb-up) !important;
-}
-html.theme-brutal .bg-down {
-  background-color: var(--fb-down) !important;
-}
-html.theme-brutal .bg-warn {
-  background-color: var(--fb-warn) !important;
-}
-html.theme-brutal .border-up\/30 {
-  border-color: rgba(74, 246, 38, 0.45) !important;
-}
-html.theme-brutal .border-down\/30 {
-  border-color: rgba(230, 25, 25, 0.55) !important;
-}
-html.theme-brutal .border-warn\/30 {
-  border-color: rgba(230, 185, 25, 0.55) !important;
-}
-
-/* Every panel-like container gets a thicker border + sharp corners. */
-html.theme-brutal section,
-html.theme-brutal .fb-panel,
-html.theme-brutal [class*="bg-panel"] {
-  border-color: var(--fb-border-strong) !important;
-  border-width: 1px !important;
-  box-shadow: none !important;
-}
-
-/* Monospace everything by default in brutal mode. */
-html.theme-brutal button,
-html.theme-brutal input,
-html.theme-brutal a,
-html.theme-brutal span,
-html.theme-brutal div,
-html.theme-brutal h1,
-html.theme-brutal h2,
-html.theme-brutal h3,
-html.theme-brutal h4,
-html.theme-brutal p,
-html.theme-brutal li,
-html.theme-brutal label {
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", monospace;
-  letter-spacing: 0.02em;
-}
-
-/* Large structural headings: still mono, but tight + heavy. */
-html.theme-brutal h1,
-html.theme-brutal h2 {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  line-height: 0.95;
-}
-
-/* Force structural labels to uppercase + wider tracking. */
-html.theme-brutal .text-xs,
-html.theme-brutal .text-sm {
-  letter-spacing: 0.08em;
-}
-
-/* Header tightened. */
-html.theme-brutal .fb-header {
-  background: var(--fb-bg) !important;
-  border-bottom-color: var(--fb-border-strong) !important;
-  backdrop-filter: none !important;
-}
-
-/* Buttons, inputs, links get pure geometry. */
-html.theme-brutal input,
-html.theme-brutal button {
-  background: var(--fb-btn-bg) !important;
-  border: 1px solid var(--fb-border-strong) !important;
-  color: var(--fb-ink) !important;
-  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
-}
-
-html.theme-brutal button:hover,
-html.theme-brutal a.inline-block:hover {
-  background: var(--fb-btn-bg-hover) !important;
-  border-color: var(--fb-border-hover) !important;
-}
-
-html.theme-brutal input:focus,
-html.theme-brutal button:focus-visible {
-  outline: 1px solid var(--fb-accent) !important;
-  outline-offset: 1px;
-  border-color: var(--fb-accent) !important;
-  box-shadow: 0 0 0 2px rgba(74, 246, 38, 0.18);
-}
-
-/* Primary accent button (e.g. Search's "Go" button) sits on phosphor green. */
-html.theme-brutal .bg-accent {
-  background: var(--fb-accent) !important;
-  color: #061006 !important;
-  border-color: var(--fb-accent) !important;
-}
-html.theme-brutal .bg-accent:hover {
-  background: #6cff4a !important;
-  border-color: #6cff4a !important;
-}
-
-html.theme-brutal a:hover {
-  color: var(--fb-accent) !important;
-}
-
-/* The example-ticker pills and watchlist rows — green-glow hover. */
-html.theme-brutal .hover\:text-accent:hover,
-html.theme-brutal .hover\:border-accent:hover {
-  color: var(--fb-accent) !important;
-  border-color: var(--fb-accent) !important;
-}
-
-/* Brutal-only visibility helpers. */
-html.theme-brutal .fb-brutal-only {
-  display: block;
-}
-html.theme-brutal span.fb-brutal-only {
-  display: inline;
-}
-html.theme-brutal .fb-default-only {
-  display: none !important;
-}
-
-/* CRT scanline overlay. */
-html.theme-brutal .fb-scanlines {
-  display: block;
-  background-image: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0) 0px,
-    rgba(0, 0, 0, 0) 2px,
-    rgba(74, 246, 38, 0.035) 2px,
-    rgba(74, 246, 38, 0.035) 3px
-  );
-  mix-blend-mode: screen;
-}
-
-/* Subtle phosphor vignette around the viewport edges. */
-html.theme-brutal body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 30;
-  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
-}
-
-/* ASCII bracket framing hook.
-   Any element with data-bracket="LABEL" gets [ LABEL ] prefix/suffix in brutal mode. */
-html.theme-brutal [data-bracket]::before {
-  content: "[ ";
-  color: var(--fb-dim);
-}
-html.theme-brutal [data-bracket]::after {
-  content: " ]";
-  color: var(--fb-dim);
-}
-
-/* Divider lines between rows become crisp 1px dashes. */
-html.theme-brutal hr,
-html.theme-brutal .fb-rule {
-  border: 0;
-  border-top: 1px dashed var(--fb-border-strong);
-}
-
-/* Theme switch button — identical geometry, different label text per theme. */
-.fb-theme-switch {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-}
-
-/* Watchlist / news / metrics rows — tighten the "card" look. */
-html.theme-brutal .rounded-md,
-html.theme-brutal .rounded-full,
-html.theme-brutal .rounded-lg,
-html.theme-brutal .rounded-sm,
-html.theme-brutal .rounded {
-  border-radius: 0 !important;
-}
-
-/* Progress bar: make it a hard-edged block. */
-html.theme-brutal .fb-score-bar {
-  background: var(--fb-border) !important;
-}
-
-/* Verdict pill becomes a monospaced tag. */
-html.theme-brutal .fb-verdict {
-  border-radius: 0 !important;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-weight: 700;
-}
-
-/* Score digit + fair-value digits: oversized + tabular. */
-html.theme-brutal .font-mono {
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
-  font-feature-settings: "tnum" 1, "zero" 1;
-}
-
-/* ===========================================================
-   .theme-redesign — polished editorial dark mode
-   Warm-tinted palette, Outfit display + IBM Plex Mono numbers,
-   tinted shadows, refined radii, considered hover states.
-   =========================================================== */
-
-html.theme-redesign {
-  --fb-bg: #0b0a09;
-  --fb-bg-grad: radial-gradient(
-    ellipse at 20% -10%,
-    rgba(232, 184, 106, 0.045) 0%,
-    transparent 55%
-  );
-  --fb-panel: #14110d;
-  --fb-panel2: #1c1813;
-  --fb-border: #2a2420;
-  --fb-border-soft: #221d19;
-  --fb-border-hover: #3a3128;
-  --fb-ink: #f5f2ec;
-  --fb-muted: #b3ab9f;
-  --fb-dim: #6d665c;
-  --fb-accent: #e8b86a;
-  --fb-accent-soft: rgba(232, 184, 106, 0.18);
-  --fb-up: #6bbf8a;
-  --fb-down: #d97766;
-  --fb-warn: #e8c26a;
-  color-scheme: dark;
-}
-
-html.theme-redesign,
-html.theme-redesign body {
-  background: var(--fb-bg);
-  color: var(--fb-ink);
-}
-
-html.theme-redesign body {
-  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-feature-settings: "ss01" 1, "cv11" 1;
-  background-image: var(--fb-bg-grad);
-  background-attachment: fixed;
-}
-
-/* Typography scale — tighter, heavier, more considered. */
-html.theme-redesign h1,
-html.theme-redesign h2,
-html.theme-redesign h3 {
-  font-family: "Outfit", sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
-  text-wrap: balance;
-}
-
-html.theme-redesign h1 {
-  font-weight: 500;
-  letter-spacing: -0.035em;
-}
-
-/* Body text — slightly lighter, improved line-height. */
-html.theme-redesign p {
-  line-height: 1.55;
-  max-width: 65ch;
-  text-wrap: pretty;
-}
-
-/* All numbers use IBM Plex Mono with tabular figures. */
-html.theme-redesign .font-mono,
-html.theme-redesign .num {
-  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", monospace !important;
-  font-feature-settings: "tnum" 1, "zero" 1;
-  letter-spacing: -0.01em;
-}
-
-/* Color token overrides. */
-html.theme-redesign .bg-bg {
-  background-color: var(--fb-bg) !important;
-}
-html.theme-redesign .bg-panel {
-  background-color: var(--fb-panel) !important;
-}
-html.theme-redesign .bg-panel2 {
-  background-color: var(--fb-panel2) !important;
-}
-html.theme-redesign .bg-border {
-  background-color: var(--fb-border) !important;
-}
-html.theme-redesign .text-ink {
-  color: var(--fb-ink) !important;
-}
-html.theme-redesign .text-muted {
-  color: var(--fb-muted) !important;
-}
-html.theme-redesign .text-dim {
-  color: var(--fb-dim) !important;
-}
-html.theme-redesign .text-accent {
-  color: var(--fb-accent) !important;
-}
-html.theme-redesign .text-up {
-  color: var(--fb-up) !important;
-}
-html.theme-redesign .text-down {
-  color: var(--fb-down) !important;
-}
-html.theme-redesign .text-warn {
-  color: var(--fb-warn) !important;
-}
-html.theme-redesign .border-border {
-  border-color: var(--fb-border) !important;
-}
-html.theme-redesign .border-accent,
-html.theme-redesign .border-accent\/40,
-html.theme-redesign .border-accent\/60,
-html.theme-redesign .border-accent\/30 {
-  border-color: var(--fb-accent) !important;
-}
-html.theme-redesign .bg-up\/15 {
-  background-color: rgba(107, 191, 138, 0.14) !important;
-}
-html.theme-redesign .bg-down\/15 {
-  background-color: rgba(217, 119, 102, 0.14) !important;
-}
-html.theme-redesign .bg-warn\/15 {
-  background-color: rgba(232, 194, 106, 0.14) !important;
-}
-html.theme-redesign .bg-up {
-  background-color: var(--fb-up) !important;
-}
-html.theme-redesign .bg-down {
-  background-color: var(--fb-down) !important;
-}
-html.theme-redesign .bg-warn {
-  background-color: var(--fb-warn) !important;
-}
-html.theme-redesign .bg-accent {
-  background-color: var(--fb-accent) !important;
-}
-html.theme-redesign .border-up\/30 {
-  border-color: rgba(107, 191, 138, 0.4) !important;
-}
-html.theme-redesign .border-down\/30 {
-  border-color: rgba(217, 119, 102, 0.45) !important;
-}
-html.theme-redesign .border-warn\/30 {
-  border-color: rgba(232, 194, 106, 0.4) !important;
-}
-
-/* Softer, rounder surfaces with warm-tinted shadow. */
-html.theme-redesign section,
-html.theme-redesign [class*="bg-panel"] {
-  border-color: var(--fb-border-soft) !important;
-  border-radius: 14px !important;
-  box-shadow:
-    0 1px 0 0 rgba(255, 240, 220, 0.025) inset,
-    0 12px 32px -16px rgba(0, 0, 0, 0.5);
-  transition: border-color 220ms ease, box-shadow 220ms ease;
-}
-
-/* Inner containers get a tighter radius for hierarchy. */
-html.theme-redesign .rounded-md {
-  border-radius: 10px !important;
-}
-html.theme-redesign .rounded-sm {
-  border-radius: 6px !important;
-}
-
-/* Header — smoother blur, hairline border. */
-html.theme-redesign .fb-header {
-  background: rgba(11, 10, 9, 0.72) !important;
-  border-bottom-color: var(--fb-border-soft) !important;
-  backdrop-filter: saturate(140%) blur(10px);
-  -webkit-backdrop-filter: saturate(140%) blur(10px);
-}
-
-/* Inputs — refined border + focus ring. */
-html.theme-redesign input {
-  background: var(--fb-panel) !important;
-  border-color: var(--fb-border) !important;
-  color: var(--fb-ink) !important;
-  transition: border-color 180ms ease, box-shadow 180ms ease;
-}
-html.theme-redesign input:hover {
-  border-color: var(--fb-border-hover) !important;
-}
-html.theme-redesign input:focus {
-  outline: none;
-  border-color: var(--fb-accent) !important;
-  box-shadow: 0 0 0 3px var(--fb-accent-soft);
-}
-
-/* Buttons — two tiers: filled (primary) + ghost. */
-html.theme-redesign button {
-  transition: background-color 180ms ease, border-color 180ms ease,
-    color 180ms ease, transform 120ms ease;
-}
-html.theme-redesign button:active {
-  transform: translateY(1px);
-}
-html.theme-redesign .bg-accent {
-  color: #1a1410 !important;
-}
-html.theme-redesign button:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--fb-accent-soft);
-}
-
-/* Links — subtle underline, never the blue-purple gradient default. */
-html.theme-redesign a {
-  transition: color 180ms ease;
-}
-html.theme-redesign a:hover {
-  color: var(--fb-accent) !important;
-}
-html.theme-redesign .hover\:text-accent:hover,
-html.theme-redesign .hover\:border-accent:hover {
-  color: var(--fb-accent) !important;
-  border-color: var(--fb-accent) !important;
-}
-
-/* Pills / badges — softer rounding, no loud fill. */
-html.theme-redesign .fb-verdict {
-  border-radius: 999px !important;
-  letter-spacing: 0.01em;
-  font-weight: 500;
-  padding: 0.35rem 0.85rem;
-}
-
-/* Example-ticker / watchlist pills — lifted hover. */
-html.theme-redesign a.inline-block {
-  transition: border-color 180ms ease, color 180ms ease, transform 200ms ease,
-    background-color 220ms ease;
-}
-html.theme-redesign a.inline-block:hover {
-  transform: translateY(-1px);
-  background-color: var(--fb-panel2) !important;
-}
-
-/* Score bar gets a gradient tint. */
-html.theme-redesign .fb-score-bar {
-  background: var(--fb-border) !important;
-  border-radius: 999px !important;
-}
-html.theme-redesign .fb-score-bar > div {
-  border-radius: 999px !important;
-}
-
-/* Section-title tracking cleanup. */
-html.theme-redesign .uppercase.tracking-wider {
-  letter-spacing: 0.11em;
-}
-
-/* Hero headline — editorial scale. */
-html.theme-redesign h1.text-3xl,
-html.theme-redesign h1.md\:text-5xl {
-  font-size: clamp(2.25rem, 5.5vw, 4.25rem);
-  font-weight: 500;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
-}
-
-/* Accent underline for highlighted words in the hero. */
-html.theme-redesign h1 .text-accent {
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    transparent 72%,
-    var(--fb-accent-soft) 72%,
-    var(--fb-accent-soft) 100%
-  );
-  padding-inline: 0.08em;
-}
-
-/* Price chart legend text alignment. */
-html.theme-redesign .font-mono.text-3xl,
-html.theme-redesign .font-mono.text-5xl {
-  font-weight: 500;
-  letter-spacing: -0.04em;
-}
-
-/* News list rows — cleaner hover. */
-html.theme-redesign ul li a:hover {
-  background-color: var(--fb-panel2) !important;
-}
-
-/* ===========================================================
-   .theme-taste — High-Agency / Bento light mode
-   Off-white substrate, Geist + Geist Mono, huge rounded cards,
-   tinted diffusion shadows, single emerald accent.
-   =========================================================== */
-
-html.theme-taste {
-  --fb-bg: #f8fafc;
-  --fb-panel: #ffffff;
-  --fb-panel2: #f1f5f9;
-  --fb-border: #e2e8f0;
-  --fb-border-soft: rgba(226, 232, 240, 0.6);
-  --fb-border-hover: #cbd5e1;
-  --fb-ink: #0f172a;
-  --fb-muted: #64748b;
-  --fb-dim: #94a3b8;
-  --fb-accent: #10b981;
-  --fb-accent-soft: rgba(16, 185, 129, 0.14);
-  --fb-accent-press: #059669;
-  --fb-up: #10b981;
-  --fb-down: #e11d48;
-  --fb-warn: #f59e0b;
-  color-scheme: light;
-}
-
-html.theme-taste,
-html.theme-taste body {
-  background: var(--fb-bg);
-  color: var(--fb-ink);
-}
-
-html.theme-taste body {
-  font-family: "Geist", "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-feature-settings: "ss01" 1, "cv11" 1;
-}
-
-/* Typography — tight display, calm body, mono numbers. */
-html.theme-taste h1,
-html.theme-taste h2,
-html.theme-taste h3 {
-  font-family: "Geist", sans-serif;
-  letter-spacing: -0.035em;
-  line-height: 1.02;
-  text-wrap: balance;
-  color: var(--fb-ink);
-}
-html.theme-taste h1 {
-  font-weight: 500;
-  letter-spacing: -0.045em;
-}
-html.theme-taste p {
-  color: var(--fb-muted);
-  line-height: 1.55;
-  max-width: 65ch;
-}
-html.theme-taste .font-mono,
-html.theme-taste .num {
-  font-family: "Geist Mono", "JetBrains Mono", ui-monospace, monospace !important;
-  font-feature-settings: "tnum" 1, "zero" 1;
-  letter-spacing: -0.015em;
-}
-
-/* Color token overrides. */
-html.theme-taste .bg-bg { background-color: var(--fb-bg) !important; }
-html.theme-taste .bg-panel { background-color: var(--fb-panel) !important; }
-html.theme-taste .bg-panel2 { background-color: var(--fb-panel2) !important; }
-html.theme-taste .bg-border { background-color: var(--fb-border) !important; }
-html.theme-taste .text-ink { color: var(--fb-ink) !important; }
-html.theme-taste .text-muted { color: var(--fb-muted) !important; }
-html.theme-taste .text-dim { color: var(--fb-dim) !important; }
-html.theme-taste .text-accent { color: var(--fb-accent) !important; }
-html.theme-taste .text-up { color: var(--fb-up) !important; }
-html.theme-taste .text-down { color: var(--fb-down) !important; }
-html.theme-taste .text-warn { color: var(--fb-warn) !important; }
-html.theme-taste .border-border { border-color: var(--fb-border) !important; }
-html.theme-taste .border-accent,
-html.theme-taste .border-accent\/40,
-html.theme-taste .border-accent\/60,
-html.theme-taste .border-accent\/30 {
-  border-color: var(--fb-accent) !important;
-}
-html.theme-taste .bg-up\/15 { background-color: rgba(16, 185, 129, 0.14) !important; }
-html.theme-taste .bg-down\/15 { background-color: rgba(225, 29, 72, 0.12) !important; }
-html.theme-taste .bg-warn\/15 { background-color: rgba(245, 158, 11, 0.14) !important; }
-html.theme-taste .bg-up { background-color: var(--fb-up) !important; }
-html.theme-taste .bg-down { background-color: var(--fb-down) !important; }
-html.theme-taste .bg-warn { background-color: var(--fb-warn) !important; }
-html.theme-taste .bg-accent { background-color: var(--fb-accent) !important; color: #ffffff !important; }
-html.theme-taste .border-up\/30 { border-color: rgba(16, 185, 129, 0.35) !important; }
-html.theme-taste .border-down\/30 { border-color: rgba(225, 29, 72, 0.35) !important; }
-html.theme-taste .border-warn\/30 { border-color: rgba(245, 158, 11, 0.35) !important; }
-
-/* Bento-style cards: big radii, hairline border, diffusion shadow. */
-html.theme-taste section,
-html.theme-taste [class*="bg-panel"] {
-  border-color: var(--fb-border-soft) !important;
-  border-radius: 28px !important;
-  box-shadow:
-    0 1px 0 0 rgba(255, 255, 255, 0.9) inset,
-    0 20px 40px -18px rgba(15, 23, 42, 0.08);
-  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 220ms ease;
-}
-
-/* Inner containers: smaller radius for hierarchy. */
-html.theme-taste .rounded-md { border-radius: 14px !important; }
-html.theme-taste .rounded-sm { border-radius: 8px !important; }
-
-/* Header: translucent white glass. */
-html.theme-taste .fb-header {
-  background: rgba(248, 250, 252, 0.78) !important;
-  border-bottom-color: var(--fb-border-soft) !important;
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-}
-
-/* Inputs — clean, rounded, focus ring in accent-soft. */
-html.theme-taste input {
-  background: var(--fb-panel) !important;
-  border-color: var(--fb-border) !important;
-  color: var(--fb-ink) !important;
-  transition: border-color 200ms ease, box-shadow 200ms ease;
-}
-html.theme-taste input::placeholder { color: var(--fb-dim) !important; }
-html.theme-taste input:hover { border-color: var(--fb-border-hover) !important; }
-html.theme-taste input:focus {
-  outline: none;
-  border-color: var(--fb-accent) !important;
-  box-shadow: 0 0 0 3px var(--fb-accent-soft);
-}
-
-/* Buttons: spring press on active, accent-tinted focus ring. */
-html.theme-taste button {
-  transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 200ms ease, color 200ms ease, transform 140ms ease;
-}
-html.theme-taste button:active {
-  transform: translateY(1px) scale(0.98);
-}
-html.theme-taste .bg-accent:hover {
-  background-color: var(--fb-accent-press) !important;
-}
-html.theme-taste button:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px var(--fb-accent-soft);
-}
-
-/* Theme-switcher pill: fits the neutral aesthetic. */
-html.theme-taste .fb-theme-switch {
-  background: var(--fb-panel) !important;
-  color: var(--fb-muted) !important;
-  border: 1px solid var(--fb-border) !important;
-}
-html.theme-taste .fb-theme-switch:hover {
-  color: var(--fb-ink) !important;
-  border-color: var(--fb-border-hover) !important;
-}
-
-/* Links — accent hover with smooth transition. */
-html.theme-taste a { transition: color 200ms ease; }
-html.theme-taste a:hover { color: var(--fb-accent-press) !important; }
-html.theme-taste .hover\:text-accent:hover,
-html.theme-taste .hover\:border-accent:hover {
-  color: var(--fb-accent-press) !important;
-  border-color: var(--fb-accent) !important;
-}
-
-/* Example + watchlist chips: lifted hover. */
-html.theme-taste a.inline-block {
-  transition: border-color 200ms ease, color 200ms ease,
-    transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-html.theme-taste a.inline-block:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px -10px rgba(15, 23, 42, 0.12);
-}
-
-/* Verdict pill — fully rounded, balanced weight. */
-html.theme-taste .fb-verdict {
-  border-radius: 999px !important;
-  letter-spacing: 0.005em;
-  font-weight: 500;
-  padding: 0.35rem 0.9rem;
-}
-
-/* Score bar — full pill. */
-html.theme-taste .fb-score-bar,
-html.theme-taste .fb-score-bar > div {
-  border-radius: 999px !important;
-}
-html.theme-taste .fb-score-bar {
-  background: var(--fb-border) !important;
-}
-
-/* Section-title tracking. */
-html.theme-taste .uppercase.tracking-wider {
-  letter-spacing: 0.1em;
-}
-
-/* Hero headline: editorial scale, tighter. */
-html.theme-taste h1.text-3xl,
-html.theme-taste h1.md\:text-5xl {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  font-weight: 500;
-  letter-spacing: -0.055em;
-  line-height: 0.96;
-}
-
-/* Hero accent highlight (the "Full picture." span): emerald wash. */
-html.theme-taste h1 .text-accent {
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    transparent 70%,
-    var(--fb-accent-soft) 70%,
-    var(--fb-accent-soft) 100%
-  );
-  padding-inline: 0.1em;
-}
-
-/* News row hover. */
-html.theme-taste ul li a:hover {
-  background-color: var(--fb-panel2) !important;
-}
-
-/* Oversized score digits tighter. */
-html.theme-taste .font-mono.text-3xl,
-html.theme-taste .font-mono.text-5xl {
-  font-weight: 500;
-  letter-spacing: -0.04em;
-}
-
-/* ===========================================================
-   .theme-bloomberg — Bloomberg Terminal homage
-   Pure black, orange primary accent, yellow highlights, dense
-   monospace everywhere, directional color-coding on +/- data,
-   colored-block section labels, <GO>-style function hints.
-   =========================================================== */
-
-html.theme-bloomberg {
+html.theme-bbg-v1 {
   --fb-bg: #000000;
   --fb-panel: #050505;
   --fb-panel2: #0c0c0c;
@@ -916,149 +74,110 @@ html.theme-bloomberg {
   color-scheme: dark;
 }
 
-html.theme-bloomberg,
-html.theme-bloomberg body {
+html.theme-bbg-v1,
+html.theme-bbg-v1 body {
   background: var(--fb-bg);
   color: var(--fb-ink);
 }
 
-html.theme-bloomberg body {
-  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular,
-    Menlo, Monaco, Consolas, monospace;
-  font-feature-settings: "tnum" 1, "zero" 1;
-  letter-spacing: 0.01em;
-}
-
-/* Force mono across the board. */
-html.theme-bloomberg h1,
-html.theme-bloomberg h2,
-html.theme-bloomberg h3,
-html.theme-bloomberg p,
-html.theme-bloomberg span,
-html.theme-bloomberg div,
-html.theme-bloomberg button,
-html.theme-bloomberg input,
-html.theme-bloomberg a,
-html.theme-bloomberg li,
-html.theme-bloomberg dt,
-html.theme-bloomberg dd {
-  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace !important;
-  letter-spacing: 0.01em;
-}
-
-html.theme-bloomberg h1,
-html.theme-bloomberg h2 {
+html.theme-bbg-v1 h1,
+html.theme-bbg-v1 h2 {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0;
   line-height: 1.02;
 }
 
-/* Color-token rewrites. */
-html.theme-bloomberg .bg-bg { background-color: var(--fb-bg) !important; }
-html.theme-bloomberg .bg-panel { background-color: var(--fb-panel) !important; }
-html.theme-bloomberg .bg-panel2 { background-color: var(--fb-panel2) !important; }
-html.theme-bloomberg .bg-border { background-color: var(--fb-border) !important; }
-html.theme-bloomberg .text-ink { color: var(--fb-ink) !important; }
-html.theme-bloomberg .text-muted { color: var(--fb-muted) !important; }
-html.theme-bloomberg .text-dim { color: var(--fb-dim) !important; }
-
-/* Accent color — orange, with yellow highlight on primary section titles.
-   The hero accent word uses orange; numeric highlights use yellow. */
-html.theme-bloomberg .text-accent { color: var(--fb-accent) !important; }
-
-/* Directional semantics kept vivid. */
-html.theme-bloomberg .text-up { color: var(--fb-up) !important; }
-html.theme-bloomberg .text-down { color: var(--fb-down) !important; }
-html.theme-bloomberg .text-warn { color: var(--fb-warn) !important; }
-html.theme-bloomberg .bg-up\/15 { background-color: rgba(26, 255, 26, 0.1) !important; }
-html.theme-bloomberg .bg-down\/15 { background-color: rgba(255, 51, 51, 0.12) !important; }
-html.theme-bloomberg .bg-warn\/15 { background-color: rgba(255, 213, 0, 0.12) !important; }
-html.theme-bloomberg .bg-up { background-color: var(--fb-up) !important; }
-html.theme-bloomberg .bg-down { background-color: var(--fb-down) !important; }
-html.theme-bloomberg .bg-warn { background-color: var(--fb-warn) !important; color: #000 !important; }
-html.theme-bloomberg .border-up\/30 { border-color: rgba(26, 255, 26, 0.5) !important; }
-html.theme-bloomberg .border-down\/30 { border-color: rgba(255, 51, 51, 0.5) !important; }
-html.theme-bloomberg .border-warn\/30 { border-color: rgba(255, 213, 0, 0.5) !important; }
-html.theme-bloomberg .border-border { border-color: var(--fb-border) !important; }
-html.theme-bloomberg .border-accent,
-html.theme-bloomberg .border-accent\/40,
-html.theme-bloomberg .border-accent\/60,
-html.theme-bloomberg .border-accent\/30 {
+html.theme-bbg-v1 .bg-bg { background-color: var(--fb-bg) !important; }
+html.theme-bbg-v1 .bg-panel { background-color: var(--fb-panel) !important; }
+html.theme-bbg-v1 .bg-panel2 { background-color: var(--fb-panel2) !important; }
+html.theme-bbg-v1 .bg-border { background-color: var(--fb-border) !important; }
+html.theme-bbg-v1 .text-ink { color: var(--fb-ink) !important; }
+html.theme-bbg-v1 .text-muted { color: var(--fb-muted) !important; }
+html.theme-bbg-v1 .text-dim { color: var(--fb-dim) !important; }
+html.theme-bbg-v1 .text-accent { color: var(--fb-accent) !important; }
+html.theme-bbg-v1 .text-up { color: var(--fb-up) !important; }
+html.theme-bbg-v1 .text-down { color: var(--fb-down) !important; }
+html.theme-bbg-v1 .text-warn { color: var(--fb-warn) !important; }
+html.theme-bbg-v1 .bg-up\/15 { background-color: rgba(26, 255, 26, 0.1) !important; }
+html.theme-bbg-v1 .bg-down\/15 { background-color: rgba(255, 51, 51, 0.12) !important; }
+html.theme-bbg-v1 .bg-warn\/15 { background-color: rgba(255, 213, 0, 0.12) !important; }
+html.theme-bbg-v1 .bg-up { background-color: var(--fb-up) !important; }
+html.theme-bbg-v1 .bg-down { background-color: var(--fb-down) !important; }
+html.theme-bbg-v1 .bg-warn { background-color: var(--fb-warn) !important; color: #000 !important; }
+html.theme-bbg-v1 .border-up\/30 { border-color: rgba(26, 255, 26, 0.5) !important; }
+html.theme-bbg-v1 .border-down\/30 { border-color: rgba(255, 51, 51, 0.5) !important; }
+html.theme-bbg-v1 .border-warn\/30 { border-color: rgba(255, 213, 0, 0.5) !important; }
+html.theme-bbg-v1 .border-border { border-color: var(--fb-border) !important; }
+html.theme-bbg-v1 .border-accent,
+html.theme-bbg-v1 .border-accent\/40,
+html.theme-bbg-v1 .border-accent\/60,
+html.theme-bbg-v1 .border-accent\/30 {
   border-color: var(--fb-accent) !important;
 }
 
-/* Kill all radii — Bloomberg is pure rectangle. */
-html.theme-bloomberg *,
-html.theme-bloomberg *::before,
-html.theme-bloomberg *::after {
+html.theme-bbg-v1 *,
+html.theme-bbg-v1 *::before,
+html.theme-bbg-v1 *::after {
   border-radius: 0 !important;
 }
 
-/* Panels: tight 1px borders, no shadow, no rounding. */
-html.theme-bloomberg section,
-html.theme-bloomberg [class*="bg-panel"] {
+html.theme-bbg-v1 section,
+html.theme-bbg-v1 [class*="bg-panel"] {
   border-color: var(--fb-border-strong) !important;
   border-width: 1px !important;
   box-shadow: none !important;
 }
 
-/* Header: solid black, hairline orange bottom border. */
-html.theme-bloomberg .fb-header {
+html.theme-bbg-v1 .fb-header {
   background: #000000 !important;
   border-bottom: 1px solid var(--fb-accent) !important;
   backdrop-filter: none !important;
 }
 
-/* Inputs + buttons. */
-html.theme-bloomberg input,
-html.theme-bloomberg button {
+html.theme-bbg-v1 input,
+html.theme-bbg-v1 button {
   background: var(--fb-panel) !important;
   border: 1px solid var(--fb-border-strong) !important;
   color: var(--fb-ink) !important;
   transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
 }
-html.theme-bloomberg input::placeholder { color: var(--fb-dim) !important; }
-html.theme-bloomberg input:focus,
-html.theme-bloomberg button:focus-visible {
+html.theme-bbg-v1 input::placeholder { color: var(--fb-dim) !important; }
+html.theme-bbg-v1 input:focus,
+html.theme-bbg-v1 button:focus-visible {
   outline: 1px solid var(--fb-accent) !important;
   outline-offset: 0;
   border-color: var(--fb-accent) !important;
 }
-html.theme-bloomberg button:hover,
-html.theme-bloomberg a.inline-block:hover {
+html.theme-bbg-v1 button:hover,
+html.theme-bbg-v1 a.inline-block:hover {
   border-color: var(--fb-accent) !important;
   color: var(--fb-accent-alt) !important;
   background: #0e0a03 !important;
 }
-
-/* Primary "Go" button: solid amber block with black text. */
-html.theme-bloomberg .bg-accent {
+html.theme-bbg-v1 .bg-accent {
   background: var(--fb-accent) !important;
   color: #000 !important;
   border-color: var(--fb-accent) !important;
 }
-html.theme-bloomberg .bg-accent:hover {
+html.theme-bbg-v1 .bg-accent:hover {
   background: var(--fb-accent-alt) !important;
   border-color: var(--fb-accent-alt) !important;
 }
 
-/* Links — cyan-on-black like legacy terminals, amber on hover. */
-html.theme-bloomberg a { color: var(--fb-accent-cyan) !important; transition: color 120ms ease; }
-html.theme-bloomberg a:hover { color: var(--fb-accent-alt) !important; }
-html.theme-bloomberg .hover\:text-accent:hover { color: var(--fb-accent-alt) !important; }
-html.theme-bloomberg .hover\:border-accent:hover { border-color: var(--fb-accent) !important; }
+html.theme-bbg-v1 a { color: var(--fb-accent-cyan) !important; transition: color 120ms ease; }
+html.theme-bbg-v1 a:hover { color: var(--fb-accent-alt) !important; }
+html.theme-bbg-v1 .hover\:text-accent:hover { color: var(--fb-accent-alt) !important; }
+html.theme-bbg-v1 .hover\:border-accent:hover { border-color: var(--fb-accent) !important; }
 
-/* Section-title amber ribbon: an orange block-marker before every
-   uppercase tracking-wider heading. */
-html.theme-bloomberg .uppercase.tracking-wider {
+html.theme-bbg-v1 .uppercase.tracking-wider {
   color: var(--fb-accent) !important;
   letter-spacing: 0.08em;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
-html.theme-bloomberg .uppercase.tracking-wider::before {
+html.theme-bbg-v1 .uppercase.tracking-wider::before {
   content: "";
   display: inline-block;
   width: 8px;
@@ -1067,17 +186,14 @@ html.theme-bloomberg .uppercase.tracking-wider::before {
   flex-shrink: 0;
 }
 
-/* Large numbers and the composite score digit sit in yellow highlight —
-   the iconic Bloomberg "press data" color. */
-html.theme-bloomberg .font-mono.text-5xl,
-html.theme-bloomberg .font-mono.text-3xl {
+html.theme-bbg-v1 .font-mono.text-5xl,
+html.theme-bbg-v1 .font-mono.text-3xl {
   color: var(--fb-accent-alt) !important;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
-/* Verdict pill becomes a hard-edged colored ribbon. */
-html.theme-bloomberg .fb-verdict {
+html.theme-bbg-v1 .fb-verdict {
   border-radius: 0 !important;
   letter-spacing: 0.12em;
   font-weight: 700;
@@ -1085,64 +201,291 @@ html.theme-bloomberg .fb-verdict {
   padding: 0.3rem 0.8rem;
 }
 
-/* Score bar — hard-edged block. */
-html.theme-bloomberg .fb-score-bar,
-html.theme-bloomberg .fb-score-bar > div {
+html.theme-bbg-v1 .fb-score-bar,
+html.theme-bbg-v1 .fb-score-bar > div {
   border-radius: 0 !important;
 }
-html.theme-bloomberg .fb-score-bar {
+html.theme-bbg-v1 .fb-score-bar {
   background: var(--fb-border) !important;
 }
 
-/* Bloomberg-only visibility helper. */
-.fb-bloomberg-only {
-  display: none;
-}
-html.theme-bloomberg .fb-bloomberg-only {
-  display: block;
-}
-html.theme-bloomberg span.fb-bloomberg-only {
-  display: inline;
-}
-
-/* Scanlines are a CRT artifact Bloomberg doesn't need — hide in BBG. */
-html.theme-bloomberg .fb-scanlines,
-html.theme-bloomberg .fb-brutal-only,
-html.theme-bloomberg .fb-redesign-only,
-html.theme-bloomberg .fb-taste-only {
-  display: none !important;
-}
-
-/* Also hide bloomberg-only when not in bloomberg. */
-html.theme-default .fb-bloomberg-only,
-html.theme-redesign .fb-bloomberg-only,
-html.theme-taste .fb-bloomberg-only,
-html.theme-brutal .fb-bloomberg-only {
-  display: none !important;
-}
-
-/* News list rows: subtle yellow hover. */
-html.theme-bloomberg ul li a:hover {
+html.theme-bbg-v1 ul li a:hover {
   background-color: #0e0a03 !important;
 }
 
-/* Metrics rows: tabular rhythm with dimmed value alignment. */
-html.theme-bloomberg dt { color: var(--fb-accent) !important; }
-html.theme-bloomberg dd { color: var(--fb-ink) !important; }
+html.theme-bbg-v1 dt { color: var(--fb-accent) !important; }
+html.theme-bbg-v1 dd { color: var(--fb-ink) !important; }
 
-/* Tighter density in tables — Bloomberg is information-dense. */
-html.theme-bloomberg dl.space-y-1 > div {
+html.theme-bbg-v1 dl.space-y-1 > div {
   padding-block: 2px !important;
   border-bottom: 1px dotted rgba(255, 102, 0, 0.12);
 }
 
-/* Theme-switcher pill. */
-html.theme-bloomberg .fb-theme-switch {
+html.theme-bbg-v1 .fb-theme-switch {
   background: var(--fb-panel) !important;
   color: var(--fb-accent) !important;
   border: 1px solid var(--fb-accent) !important;
 }
-html.theme-bloomberg .fb-theme-switch:hover {
+html.theme-bbg-v1 .fb-theme-switch:hover {
   background: var(--fb-accent) !important;
   color: #000 !important;
 }
+
+/* ===========================================================
+   .theme-bbg-v2 — Bloomberg Terminal v2 (dense / ribbon)
+   Full solid orange section header bars (BLACK TEXT on ORANGE),
+   tighter padding, multi-color labels (orange/cyan/yellow),
+   extended session-stats strip visible.
+   =========================================================== */
+
+html.theme-bbg-v2 {
+  --fb-bg: #000000;
+  --fb-panel: #050505;
+  --fb-panel2: #0a0a0a;
+  --fb-border: #1a1a1a;
+  --fb-border-strong: #242424;
+  --fb-border-hover: #ff6600;
+  --fb-ink: #f0f0f0;
+  --fb-muted: #b8b8b8;
+  --fb-dim: #6a6a6a;
+  --fb-accent: #ff6600;        /* orange — primary */
+  --fb-accent-alt: #ffd500;    /* yellow — press data */
+  --fb-accent-cyan: #00d4ff;   /* cyan — tickers, section B */
+  --fb-accent-magenta: #ff4dc4;/* magenta — section C tags */
+  --fb-up: #1aff1a;
+  --fb-down: #ff3333;
+  --fb-warn: #ffd500;
+  color-scheme: dark;
+}
+
+html.theme-bbg-v2,
+html.theme-bbg-v2 body {
+  background: var(--fb-bg);
+  color: var(--fb-ink);
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+html.theme-bbg-v2 h1,
+html.theme-bbg-v2 h2 {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+html.theme-bbg-v2 .bg-bg { background-color: var(--fb-bg) !important; }
+html.theme-bbg-v2 .bg-panel { background-color: var(--fb-panel) !important; }
+html.theme-bbg-v2 .bg-panel2 { background-color: var(--fb-panel2) !important; }
+html.theme-bbg-v2 .bg-border { background-color: var(--fb-border) !important; }
+html.theme-bbg-v2 .text-ink { color: var(--fb-ink) !important; }
+html.theme-bbg-v2 .text-muted { color: var(--fb-muted) !important; }
+html.theme-bbg-v2 .text-dim { color: var(--fb-dim) !important; }
+html.theme-bbg-v2 .text-accent { color: var(--fb-accent) !important; }
+html.theme-bbg-v2 .text-up { color: var(--fb-up) !important; }
+html.theme-bbg-v2 .text-down { color: var(--fb-down) !important; }
+html.theme-bbg-v2 .text-warn { color: var(--fb-warn) !important; }
+html.theme-bbg-v2 .bg-up\/15 { background-color: rgba(26, 255, 26, 0.1) !important; }
+html.theme-bbg-v2 .bg-down\/15 { background-color: rgba(255, 51, 51, 0.12) !important; }
+html.theme-bbg-v2 .bg-warn\/15 { background-color: rgba(255, 213, 0, 0.12) !important; }
+html.theme-bbg-v2 .bg-up { background-color: var(--fb-up) !important; color: #000 !important; }
+html.theme-bbg-v2 .bg-down { background-color: var(--fb-down) !important; }
+html.theme-bbg-v2 .bg-warn { background-color: var(--fb-warn) !important; color: #000 !important; }
+html.theme-bbg-v2 .border-up\/30 { border-color: rgba(26, 255, 26, 0.5) !important; }
+html.theme-bbg-v2 .border-down\/30 { border-color: rgba(255, 51, 51, 0.5) !important; }
+html.theme-bbg-v2 .border-warn\/30 { border-color: rgba(255, 213, 0, 0.5) !important; }
+html.theme-bbg-v2 .border-border { border-color: var(--fb-border) !important; }
+html.theme-bbg-v2 .border-accent,
+html.theme-bbg-v2 .border-accent\/40,
+html.theme-bbg-v2 .border-accent\/60,
+html.theme-bbg-v2 .border-accent\/30 {
+  border-color: var(--fb-accent) !important;
+}
+
+html.theme-bbg-v2 *,
+html.theme-bbg-v2 *::before,
+html.theme-bbg-v2 *::after {
+  border-radius: 0 !important;
+}
+
+/* v2 density: shrink section padding from p-5 to ~p-3. */
+html.theme-bbg-v2 section.p-5 {
+  padding: 0 !important;
+}
+html.theme-bbg-v2 section,
+html.theme-bbg-v2 [class*="bg-panel"] {
+  border: 1px solid var(--fb-border-strong) !important;
+  box-shadow: none !important;
+}
+
+/* Filled-ribbon headers: target any section's first uppercase.tracking-wider
+   element — make it a filled orange bar with black text. */
+html.theme-bbg-v2 section > div:first-child .uppercase.tracking-wider,
+html.theme-bbg-v2 section > .uppercase.tracking-wider,
+html.theme-bbg-v2 .fb-session-stats .text-accent {
+  color: #000 !important;
+}
+
+/* Every uppercase.tracking-wider (section header) in v2 gets a solid orange
+   horizontal ribbon backdrop with black text and a cyan left accent. */
+html.theme-bbg-v2 .uppercase.tracking-wider {
+  background: var(--fb-accent) !important;
+  color: #000 !important;
+  padding: 3px 8px 3px 6px !important;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  border-left: 4px solid var(--fb-accent-cyan);
+  line-height: 1.2;
+}
+
+/* But sub-sub labels (dim telemetry strips etc.) shouldn't get the ribbon. */
+html.theme-bbg-v2 .text-\[10px\].uppercase,
+html.theme-bbg-v2 .text-\[9px\].uppercase,
+html.theme-bbg-v2 span.fb-v1-only.uppercase,
+html.theme-bbg-v2 .fb-theme-switch.uppercase {
+  background: transparent !important;
+  padding: 0 !important;
+  border-left: 0 !important;
+  color: var(--fb-accent) !important;
+  font-weight: 500;
+}
+
+/* The SessionStats internal labels: reset the ribbon look. */
+html.theme-bbg-v2 .fb-session-stats .uppercase {
+  background: transparent !important;
+  padding: 0 !important;
+  border-left: 0 !important;
+  color: var(--fb-accent) !important;
+  font-weight: 500;
+}
+
+/* Score bar & verdict pill kept hard-edged. */
+html.theme-bbg-v2 .fb-score-bar,
+html.theme-bbg-v2 .fb-score-bar > div {
+  border-radius: 0 !important;
+}
+html.theme-bbg-v2 .fb-score-bar {
+  background: var(--fb-border) !important;
+}
+html.theme-bbg-v2 .fb-verdict {
+  border-radius: 0 !important;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+}
+
+/* Primary digits — yellow press-data color, tighter. */
+html.theme-bbg-v2 .font-mono.text-5xl,
+html.theme-bbg-v2 .font-mono.text-3xl {
+  color: var(--fb-accent-alt) !important;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+/* Header: solid black, hairline orange bottom. */
+html.theme-bbg-v2 .fb-header {
+  background: #000000 !important;
+  border-bottom: 1px solid var(--fb-accent) !important;
+  backdrop-filter: none !important;
+}
+
+/* Inputs + buttons — matching v1. */
+html.theme-bbg-v2 input,
+html.theme-bbg-v2 button {
+  background: var(--fb-panel) !important;
+  border: 1px solid var(--fb-border-strong) !important;
+  color: var(--fb-ink) !important;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+html.theme-bbg-v2 input::placeholder { color: var(--fb-dim) !important; }
+html.theme-bbg-v2 input:focus,
+html.theme-bbg-v2 button:focus-visible {
+  outline: 1px solid var(--fb-accent) !important;
+  outline-offset: 0;
+  border-color: var(--fb-accent) !important;
+}
+html.theme-bbg-v2 button:hover,
+html.theme-bbg-v2 a.inline-block:hover {
+  border-color: var(--fb-accent) !important;
+  color: var(--fb-accent-alt) !important;
+  background: #0e0a03 !important;
+}
+html.theme-bbg-v2 .bg-accent {
+  background: var(--fb-accent) !important;
+  color: #000 !important;
+  border-color: var(--fb-accent) !important;
+}
+html.theme-bbg-v2 .bg-accent:hover {
+  background: var(--fb-accent-alt) !important;
+  border-color: var(--fb-accent-alt) !important;
+}
+
+html.theme-bbg-v2 a { color: var(--fb-accent-cyan) !important; transition: color 120ms ease; }
+html.theme-bbg-v2 a:hover { color: var(--fb-accent-alt) !important; }
+html.theme-bbg-v2 .hover\:text-accent:hover { color: var(--fb-accent-alt) !important; }
+html.theme-bbg-v2 .hover\:border-accent:hover { border-color: var(--fb-accent) !important; }
+
+/* Metric rows: use cyan for keys, yellow for values where present. */
+html.theme-bbg-v2 dt { color: var(--fb-accent-cyan) !important; }
+html.theme-bbg-v2 dd { color: var(--fb-ink) !important; }
+html.theme-bbg-v2 dl.space-y-1 > div {
+  padding-block: 2px !important;
+  border-bottom: 1px dotted rgba(255, 102, 0, 0.18);
+}
+
+/* Theme switcher pill in v2. */
+html.theme-bbg-v2 .fb-theme-switch {
+  background: var(--fb-accent) !important;
+  color: #000 !important;
+  border: 1px solid var(--fb-accent) !important;
+  font-weight: 700;
+}
+html.theme-bbg-v2 .fb-theme-switch:hover {
+  background: var(--fb-accent-alt) !important;
+  border-color: var(--fb-accent-alt) !important;
+}
+
+/* News rows: tighter. */
+html.theme-bbg-v2 ul li a { padding: 0.5rem 0.75rem !important; }
+html.theme-bbg-v2 ul li a:hover { background-color: #0e0a03 !important; }
+
+/* SessionStats panel specifically: pure rectangle, no extra padding. */
+html.theme-bbg-v2 .fb-session-stats {
+  border: 1px solid var(--fb-accent) !important;
+}
+html.theme-bbg-v2 .fb-session-stats .fb-session-range > div {
+  background: var(--fb-accent-alt) !important;
+}
+
+/* Every card gains a hairline orange top bar in v2 to feel like labelled
+   pane rows. */
+html.theme-bbg-v2 section::before {
+  content: "";
+  display: block;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--fb-accent) 0,
+    var(--fb-accent) 30%,
+    var(--fb-accent-cyan) 30%,
+    var(--fb-accent-cyan) 60%,
+    var(--fb-accent-alt) 60%,
+    var(--fb-accent-alt) 100%
+  );
+}
+
+/* Inner grid children shouldn't inherit the ::before. */
+html.theme-bbg-v2 section > section::before,
+html.theme-bbg-v2 section > div > section::before {
+  content: none;
+}
+
+/* Composite/subscore card restore padding after the ribbon. */
+html.theme-bbg-v2 .rounded-md.bg-panel2 { padding: 10px !important; }
+html.theme-bbg-v2 .rounded-md.bg-panel { padding: 10px !important; }
+
+/* Tighter space-y on the ticker page in v2. */
+html.theme-bbg-v2 .space-y-5 > * + * { margin-top: 0.75rem !important; }

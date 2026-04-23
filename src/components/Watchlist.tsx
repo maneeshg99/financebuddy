@@ -62,7 +62,7 @@ export default function Watchlist() {
   if (!ready) {
     return (
       <div className="rounded-md border border-border bg-panel p-4">
-        <div className="text-muted text-xs uppercase tracking-wider">Watchlist</div>
+        <div className="text-muted text-xs uppercase tracking-wider">WATCHLIST /// LOCAL</div>
       </div>
     );
   }
@@ -70,15 +70,9 @@ export default function Watchlist() {
   return (
     <div className="rounded-md border border-border bg-panel p-4">
       <div className="flex items-baseline justify-between mb-3">
-        <div className="text-muted text-xs uppercase tracking-wider">
-          <span className="fb-brutal-only text-dim">[ </span>
-          <span className="fb-default-only">Watchlist</span>
-          <span className="fb-brutal-only">WATCHLIST /// LOCAL</span>
-          <span className="fb-brutal-only text-dim"> ]</span>
-        </div>
+        <div className="text-muted text-xs uppercase tracking-wider">WATCHLIST /// LOCAL</div>
         <div className="text-dim text-xs">
-          <span className="fb-default-only">{list.length} saved</span>
-          <span className="fb-brutal-only font-mono">N={String(list.length).padStart(3, "0")}</span>
+          <span className="font-mono">N={String(list.length).padStart(3, "0")}</span>
         </div>
       </div>
       {list.length === 0 ? (

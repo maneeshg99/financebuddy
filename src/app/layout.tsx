@@ -10,16 +10,16 @@ export const metadata: Metadata = {
 const NO_FLASH_SCRIPT = `(() => {
   try {
     var t = localStorage.getItem("fb:theme");
-    if (t !== "default" && t !== "redesign" && t !== "taste" && t !== "bloomberg") t = "brutal";
+    if (t !== "bbg-v2") t = "bbg-v1";
     document.documentElement.classList.add("theme-" + t);
   } catch (e) {
-    document.documentElement.classList.add("theme-brutal");
+    document.documentElement.classList.add("theme-bbg-v1");
   }
 })();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="theme-brutal">
+    <html lang="en" className="theme-bbg-v1">
       <head>
         <script dangerouslySetInnerHTML={{ __html: NO_FLASH_SCRIPT }} />
       </head>
@@ -28,10 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className="max-w-6xl mx-auto px-4 py-6">{children}</main>
         <footer className="max-w-6xl mx-auto px-4 py-8 text-xs text-dim">
-          <div className="fb-brutal-only font-mono uppercase tracking-wider mb-2 text-dim">
-            {"[ END OF TRANSMISSION ]   /// REV 0.1   /// UNIT FB-01   /// © 2026"}
-          </div>
-          <div className="fb-bloomberg-only font-mono uppercase tracking-wider mb-2 text-dim">
+          <div className="font-mono uppercase tracking-wider mb-2 text-dim">
             <span className="text-accent">{"<HELP>"}</span>
             {" FOR HELP   "}
             <span className="text-accent">{"<MENU>"}</span>

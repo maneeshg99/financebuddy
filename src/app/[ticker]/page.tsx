@@ -5,6 +5,7 @@ import MetricsTable from "@/components/MetricsTable";
 import NewsList from "@/components/NewsList";
 import PriceChart from "@/components/PriceChart";
 import ScoreCard from "@/components/ScoreCard";
+import SessionStats from "@/components/SessionStats";
 import WatchlistStar from "@/components/WatchlistStar";
 import { fetchSnapshot, normalizeSymbol } from "@/lib/yahoo";
 import { fetchNews, fetchNextEarnings, hasFinnhubKey } from "@/lib/finnhub";
@@ -26,7 +27,7 @@ function HeaderStrip({
 }) {
   return (
     <section className="rounded-md border border-border bg-panel p-5">
-      <div className="fb-brutal-only font-mono text-[10px] uppercase tracking-[0.25em] text-dim mb-3 flex items-center justify-between">
+      <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-dim mb-3 flex items-center justify-between">
         <span>{`/// TARGET ACQUIRED /// SYM = ${snap.symbol}`}</span>
         <span>{"CH-A ● LIVE"}</span>
       </div>
@@ -82,6 +83,9 @@ export default async function TickerPage({ params }: { params: { ticker: string 
     return (
       <div className="space-y-5">
         <HeaderStrip snap={snap} />
+        <div className="fb-v2-only">
+          <SessionStats snap={snap} />
+        </div>
         <ScoreCard report={report} />
         <FairValueCard fv={fv} price={snap.price} />
         <PriceChart symbol={snap.symbol} />
