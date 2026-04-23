@@ -25,6 +25,25 @@ export default function Header() {
           <span className="whitespace-nowrap">CH.A ONLINE</span>
         </div>
       </div>
+      <div className="fb-bloomberg-only border-t border-border">
+        <div className="max-w-6xl mx-auto px-4 py-1 flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-wider overflow-hidden">
+          <span className="truncate text-dim">
+            <span className="text-accent">{"<HELP>"}</span>
+            {" HELP    "}
+            <span className="text-accent">{"<MENU>"}</span>
+            {" FAVS    "}
+            <span className="text-accent">{"<GO>"}</span>
+            {" LOAD"}
+          </span>
+          <span className="whitespace-nowrap hidden md:inline text-dim">
+            {"FB-01 "}
+            <span className="text-accent">{"<EQUITY>"}</span>
+            {" "}
+            <span className="text-accent">{"<GO>"}</span>
+          </span>
+          <span className="whitespace-nowrap text-dim">LIVE</span>
+        </div>
+      </div>
     </header>
   );
 }

@@ -2,30 +2,40 @@
 
 import { useEffect, useState } from "react";
 
-export type Theme = "default" | "redesign" | "brutal" | "taste";
+export type Theme = "default" | "redesign" | "brutal" | "taste" | "bloomberg";
 const STORAGE_KEY = "fb:theme";
-const ORDER: Theme[] = ["brutal", "redesign", "taste", "default"];
+const ORDER: Theme[] = ["brutal", "bloomberg", "redesign", "taste", "default"];
 
 function sanitize(v: string | null): Theme {
-  return v === "default" || v === "redesign" || v === "taste" ? v : "brutal";
+  return v === "default" || v === "redesign" || v === "taste" || v === "bloomberg"
+    ? v
+    : "brutal";
 }
 
 function applyTheme(t: Theme) {
   if (typeof document === "undefined") return;
   const html = document.documentElement;
-  html.classList.remove("theme-default", "theme-redesign", "theme-brutal", "theme-taste");
+  html.classList.remove(
+    "theme-default",
+    "theme-redesign",
+    "theme-brutal",
+    "theme-taste",
+    "theme-bloomberg"
+  );
   html.classList.add(`theme-${t}`);
 }
 
 const LABEL: Record<Theme, string> = {
   brutal: "[ TERMINAL ]",
+  bloomberg: "<GO> BBG",
   redesign: "/ REDESIGN",
   taste: "· TASTE",
   default: "// DEFAULT",
 };
 
 const TITLE: Record<Theme, string> = {
-  brutal: "Switch to redesign theme",
+  brutal: "Switch to Bloomberg theme",
+  bloomberg: "Switch to redesign theme",
   redesign: "Switch to taste theme",
   taste: "Switch to default theme",
   default: "Switch back to terminal theme",

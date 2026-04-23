@@ -15,14 +15,15 @@ import type { ChartPoint } from "@/lib/types";
 type Range = "1M" | "3M" | "1Y" | "5Y";
 const RANGES: Range[] = ["1M", "3M", "1Y", "5Y"];
 
-type ThemeName = "default" | "redesign" | "brutal" | "taste";
+type ThemeName = "default" | "redesign" | "brutal" | "taste" | "bloomberg";
 
 function useTheme(): ThemeName {
   const [theme, setTheme] = useState<ThemeName>("default");
   useEffect(() => {
     const read = () => {
       const cl = document.documentElement.classList;
-      if (cl.contains("theme-brutal")) setTheme("brutal");
+      if (cl.contains("theme-bloomberg")) setTheme("bloomberg");
+      else if (cl.contains("theme-brutal")) setTheme("brutal");
       else if (cl.contains("theme-redesign")) setTheme("redesign");
       else if (cl.contains("theme-taste")) setTheme("taste");
       else setTheme("default");
@@ -40,10 +41,11 @@ const CHART_COLORS: Record<ThemeName, {
   grid: string; axis: string;
   tip: string; tipBorder: string; tipInk: string; tipLabel: string;
 }> = {
-  default: { price: "#7dd3fc", ma50: "#facc15", ma200: "#ef4444", grid: "#1f2937", axis: "#6b7280", tip: "#141c28", tipBorder: "#1f2937", tipInk: "#e5e7eb", tipLabel: "#9ca3af" },
-  redesign: { price: "#e8b86a", ma50: "#b3ab9f", ma200: "#d97766", grid: "#2a2420", axis: "#6d665c", tip: "#14110d", tipBorder: "#2a2420", tipInk: "#f5f2ec", tipLabel: "#b3ab9f" },
-  brutal:  { price: "#4af626", ma50: "#e6b919", ma200: "#eaeaea", grid: "#1f3d1f", axis: "#6a7a6a", tip: "#0c0c0c", tipBorder: "#2f6b2f", tipInk: "#eaeaea", tipLabel: "#a8b8a8" },
-  taste:   { price: "#0f172a", ma50: "#94a3b8", ma200: "#10b981", grid: "#e2e8f0", axis: "#94a3b8", tip: "#ffffff", tipBorder: "#e2e8f0", tipInk: "#0f172a", tipLabel: "#64748b" },
+  default:   { price: "#7dd3fc", ma50: "#facc15", ma200: "#ef4444", grid: "#1f2937", axis: "#6b7280", tip: "#141c28", tipBorder: "#1f2937", tipInk: "#e5e7eb", tipLabel: "#9ca3af" },
+  redesign:  { price: "#e8b86a", ma50: "#b3ab9f", ma200: "#d97766", grid: "#2a2420", axis: "#6d665c", tip: "#14110d", tipBorder: "#2a2420", tipInk: "#f5f2ec", tipLabel: "#b3ab9f" },
+  brutal:    { price: "#4af626", ma50: "#e6b919", ma200: "#eaeaea", grid: "#1f3d1f", axis: "#6a7a6a", tip: "#0c0c0c", tipBorder: "#2f6b2f", tipInk: "#eaeaea", tipLabel: "#a8b8a8" },
+  taste:     { price: "#0f172a", ma50: "#94a3b8", ma200: "#10b981", grid: "#e2e8f0", axis: "#94a3b8", tip: "#ffffff", tipBorder: "#e2e8f0", tipInk: "#0f172a", tipLabel: "#64748b" },
+  bloomberg: { price: "#ffd500", ma50: "#00d4ff", ma200: "#ff6600", grid: "#1f1f1f", axis: "#7a7a7a", tip: "#050505", tipBorder: "#ff6600", tipInk: "#ffd500", tipLabel: "#ff6600" },
 };
 
 export default function PriceChart({ symbol }: { symbol: string }) {

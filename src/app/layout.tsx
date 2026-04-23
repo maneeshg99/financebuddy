@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const NO_FLASH_SCRIPT = `(() => {
   try {
     var t = localStorage.getItem("fb:theme");
-    if (t !== "default" && t !== "redesign" && t !== "taste") t = "brutal";
+    if (t !== "default" && t !== "redesign" && t !== "taste" && t !== "bloomberg") t = "brutal";
     document.documentElement.classList.add("theme-" + t);
   } catch (e) {
     document.documentElement.classList.add("theme-brutal");
@@ -30,6 +30,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="max-w-6xl mx-auto px-4 py-8 text-xs text-dim">
           <div className="fb-brutal-only font-mono uppercase tracking-wider mb-2 text-dim">
             {"[ END OF TRANSMISSION ]   /// REV 0.1   /// UNIT FB-01   /// © 2026"}
+          </div>
+          <div className="fb-bloomberg-only font-mono uppercase tracking-wider mb-2 text-dim">
+            <span className="text-accent">{"<HELP>"}</span>
+            {" FOR HELP   "}
+            <span className="text-accent">{"<MENU>"}</span>
+            {" FOR FAVORITES   FB-01 EQUITY   © 2026 FB-TERMINAL"}
           </div>
           Data: Yahoo Finance (via yahoo-finance2) · News: Finnhub · For personal research use. Not investment advice.
         </footer>

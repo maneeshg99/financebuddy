@@ -889,3 +889,260 @@ html.theme-taste .font-mono.text-5xl {
   font-weight: 500;
   letter-spacing: -0.04em;
 }
+
+/* ===========================================================
+   .theme-bloomberg — Bloomberg Terminal homage
+   Pure black, orange primary accent, yellow highlights, dense
+   monospace everywhere, directional color-coding on +/- data,
+   colored-block section labels, <GO>-style function hints.
+   =========================================================== */
+
+html.theme-bloomberg {
+  --fb-bg: #000000;
+  --fb-panel: #050505;
+  --fb-panel2: #0c0c0c;
+  --fb-border: #1f1f1f;
+  --fb-border-strong: #2a2a2a;
+  --fb-border-hover: #ff6600;
+  --fb-ink: #f0f0f0;
+  --fb-muted: #cfcfcf;
+  --fb-dim: #7a7a7a;
+  --fb-accent: #ff6600;
+  --fb-accent-alt: #ffd500;
+  --fb-accent-cyan: #00d4ff;
+  --fb-up: #1aff1a;
+  --fb-down: #ff3333;
+  --fb-warn: #ffd500;
+  color-scheme: dark;
+}
+
+html.theme-bloomberg,
+html.theme-bloomberg body {
+  background: var(--fb-bg);
+  color: var(--fb-ink);
+}
+
+html.theme-bloomberg body {
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, monospace;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  letter-spacing: 0.01em;
+}
+
+/* Force mono across the board. */
+html.theme-bloomberg h1,
+html.theme-bloomberg h2,
+html.theme-bloomberg h3,
+html.theme-bloomberg p,
+html.theme-bloomberg span,
+html.theme-bloomberg div,
+html.theme-bloomberg button,
+html.theme-bloomberg input,
+html.theme-bloomberg a,
+html.theme-bloomberg li,
+html.theme-bloomberg dt,
+html.theme-bloomberg dd {
+  font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace !important;
+  letter-spacing: 0.01em;
+}
+
+html.theme-bloomberg h1,
+html.theme-bloomberg h2 {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.02;
+}
+
+/* Color-token rewrites. */
+html.theme-bloomberg .bg-bg { background-color: var(--fb-bg) !important; }
+html.theme-bloomberg .bg-panel { background-color: var(--fb-panel) !important; }
+html.theme-bloomberg .bg-panel2 { background-color: var(--fb-panel2) !important; }
+html.theme-bloomberg .bg-border { background-color: var(--fb-border) !important; }
+html.theme-bloomberg .text-ink { color: var(--fb-ink) !important; }
+html.theme-bloomberg .text-muted { color: var(--fb-muted) !important; }
+html.theme-bloomberg .text-dim { color: var(--fb-dim) !important; }
+
+/* Accent color — orange, with yellow highlight on primary section titles.
+   The hero accent word uses orange; numeric highlights use yellow. */
+html.theme-bloomberg .text-accent { color: var(--fb-accent) !important; }
+
+/* Directional semantics kept vivid. */
+html.theme-bloomberg .text-up { color: var(--fb-up) !important; }
+html.theme-bloomberg .text-down { color: var(--fb-down) !important; }
+html.theme-bloomberg .text-warn { color: var(--fb-warn) !important; }
+html.theme-bloomberg .bg-up\/15 { background-color: rgba(26, 255, 26, 0.1) !important; }
+html.theme-bloomberg .bg-down\/15 { background-color: rgba(255, 51, 51, 0.12) !important; }
+html.theme-bloomberg .bg-warn\/15 { background-color: rgba(255, 213, 0, 0.12) !important; }
+html.theme-bloomberg .bg-up { background-color: var(--fb-up) !important; }
+html.theme-bloomberg .bg-down { background-color: var(--fb-down) !important; }
+html.theme-bloomberg .bg-warn { background-color: var(--fb-warn) !important; color: #000 !important; }
+html.theme-bloomberg .border-up\/30 { border-color: rgba(26, 255, 26, 0.5) !important; }
+html.theme-bloomberg .border-down\/30 { border-color: rgba(255, 51, 51, 0.5) !important; }
+html.theme-bloomberg .border-warn\/30 { border-color: rgba(255, 213, 0, 0.5) !important; }
+html.theme-bloomberg .border-border { border-color: var(--fb-border) !important; }
+html.theme-bloomberg .border-accent,
+html.theme-bloomberg .border-accent\/40,
+html.theme-bloomberg .border-accent\/60,
+html.theme-bloomberg .border-accent\/30 {
+  border-color: var(--fb-accent) !important;
+}
+
+/* Kill all radii — Bloomberg is pure rectangle. */
+html.theme-bloomberg *,
+html.theme-bloomberg *::before,
+html.theme-bloomberg *::after {
+  border-radius: 0 !important;
+}
+
+/* Panels: tight 1px borders, no shadow, no rounding. */
+html.theme-bloomberg section,
+html.theme-bloomberg [class*="bg-panel"] {
+  border-color: var(--fb-border-strong) !important;
+  border-width: 1px !important;
+  box-shadow: none !important;
+}
+
+/* Header: solid black, hairline orange bottom border. */
+html.theme-bloomberg .fb-header {
+  background: #000000 !important;
+  border-bottom: 1px solid var(--fb-accent) !important;
+  backdrop-filter: none !important;
+}
+
+/* Inputs + buttons. */
+html.theme-bloomberg input,
+html.theme-bloomberg button {
+  background: var(--fb-panel) !important;
+  border: 1px solid var(--fb-border-strong) !important;
+  color: var(--fb-ink) !important;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+html.theme-bloomberg input::placeholder { color: var(--fb-dim) !important; }
+html.theme-bloomberg input:focus,
+html.theme-bloomberg button:focus-visible {
+  outline: 1px solid var(--fb-accent) !important;
+  outline-offset: 0;
+  border-color: var(--fb-accent) !important;
+}
+html.theme-bloomberg button:hover,
+html.theme-bloomberg a.inline-block:hover {
+  border-color: var(--fb-accent) !important;
+  color: var(--fb-accent-alt) !important;
+  background: #0e0a03 !important;
+}
+
+/* Primary "Go" button: solid amber block with black text. */
+html.theme-bloomberg .bg-accent {
+  background: var(--fb-accent) !important;
+  color: #000 !important;
+  border-color: var(--fb-accent) !important;
+}
+html.theme-bloomberg .bg-accent:hover {
+  background: var(--fb-accent-alt) !important;
+  border-color: var(--fb-accent-alt) !important;
+}
+
+/* Links — cyan-on-black like legacy terminals, amber on hover. */
+html.theme-bloomberg a { color: var(--fb-accent-cyan) !important; transition: color 120ms ease; }
+html.theme-bloomberg a:hover { color: var(--fb-accent-alt) !important; }
+html.theme-bloomberg .hover\:text-accent:hover { color: var(--fb-accent-alt) !important; }
+html.theme-bloomberg .hover\:border-accent:hover { border-color: var(--fb-accent) !important; }
+
+/* Section-title amber ribbon: an orange block-marker before every
+   uppercase tracking-wider heading. */
+html.theme-bloomberg .uppercase.tracking-wider {
+  color: var(--fb-accent) !important;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+html.theme-bloomberg .uppercase.tracking-wider::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 10px;
+  background: var(--fb-accent);
+  flex-shrink: 0;
+}
+
+/* Large numbers and the composite score digit sit in yellow highlight —
+   the iconic Bloomberg "press data" color. */
+html.theme-bloomberg .font-mono.text-5xl,
+html.theme-bloomberg .font-mono.text-3xl {
+  color: var(--fb-accent-alt) !important;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Verdict pill becomes a hard-edged colored ribbon. */
+html.theme-bloomberg .fb-verdict {
+  border-radius: 0 !important;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+}
+
+/* Score bar — hard-edged block. */
+html.theme-bloomberg .fb-score-bar,
+html.theme-bloomberg .fb-score-bar > div {
+  border-radius: 0 !important;
+}
+html.theme-bloomberg .fb-score-bar {
+  background: var(--fb-border) !important;
+}
+
+/* Bloomberg-only visibility helper. */
+.fb-bloomberg-only {
+  display: none;
+}
+html.theme-bloomberg .fb-bloomberg-only {
+  display: block;
+}
+html.theme-bloomberg span.fb-bloomberg-only {
+  display: inline;
+}
+
+/* Scanlines are a CRT artifact Bloomberg doesn't need — hide in BBG. */
+html.theme-bloomberg .fb-scanlines,
+html.theme-bloomberg .fb-brutal-only,
+html.theme-bloomberg .fb-redesign-only,
+html.theme-bloomberg .fb-taste-only {
+  display: none !important;
+}
+
+/* Also hide bloomberg-only when not in bloomberg. */
+html.theme-default .fb-bloomberg-only,
+html.theme-redesign .fb-bloomberg-only,
+html.theme-taste .fb-bloomberg-only,
+html.theme-brutal .fb-bloomberg-only {
+  display: none !important;
+}
+
+/* News list rows: subtle yellow hover. */
+html.theme-bloomberg ul li a:hover {
+  background-color: #0e0a03 !important;
+}
+
+/* Metrics rows: tabular rhythm with dimmed value alignment. */
+html.theme-bloomberg dt { color: var(--fb-accent) !important; }
+html.theme-bloomberg dd { color: var(--fb-ink) !important; }
+
+/* Tighter density in tables — Bloomberg is information-dense. */
+html.theme-bloomberg dl.space-y-1 > div {
+  padding-block: 2px !important;
+  border-bottom: 1px dotted rgba(255, 102, 0, 0.12);
+}
+
+/* Theme-switcher pill. */
+html.theme-bloomberg .fb-theme-switch {
+  background: var(--fb-panel) !important;
+  color: var(--fb-accent) !important;
+  border: 1px solid var(--fb-accent) !important;
+}
+html.theme-bloomberg .fb-theme-switch:hover {
+  background: var(--fb-accent) !important;
+  color: #000 !important;
+}
