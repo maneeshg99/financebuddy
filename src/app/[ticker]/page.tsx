@@ -5,7 +5,6 @@ import FairValueCard from "@/components/FairValueCard";
 import MetricsTable from "@/components/MetricsTable";
 import NewsList from "@/components/NewsList";
 import ScoreCard from "@/components/ScoreCard";
-import SessionStats from "@/components/SessionStats";
 import TabNav, { parseTab } from "@/components/TabNav";
 import WatchlistStar from "@/components/WatchlistStar";
 import { fetchSnapshot, normalizeSymbol } from "@/lib/yahoo";
@@ -91,8 +90,7 @@ export default async function TickerPage({
     return (
       <div className="space-y-4">
         <HeaderStrip snap={snap} />
-        <ChartSection symbol={snap.symbol} />
-        <SessionStats snap={snap} />
+        <ChartSection snap={snap} />
         <TabNav current={tab} symbol={snap.symbol} />
         {tab === "score" ? <ScoreCard report={report} /> : null}
         {tab === "value" ? <FairValueCard fv={fv} price={snap.price} /> : null}

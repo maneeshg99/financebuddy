@@ -29,15 +29,16 @@ function volRatio(vol: number | null, avg: number | null): string {
 }
 
 export default function SessionStats({ snap }: { snap: Snapshot }) {
-  const volR = snap.volume !== null && snap.avgVolume !== null ? snap.volume / snap.avgVolume : null;
+  const volR =
+    snap.volume !== null && snap.avgVolume !== null ? snap.volume / snap.avgVolume : null;
   const weekPos =
     snap.price !== null && snap.fiftyTwoWeekHigh !== null && snap.fiftyTwoWeekLow !== null
       ? ((snap.price - snap.fiftyTwoWeekLow) / (snap.fiftyTwoWeekHigh - snap.fiftyTwoWeekLow)) * 100
       : null;
 
   return (
-    <section className="fb-session-stats bg-panel2 border border-border">
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-x-4 gap-y-2 p-3">
+    <div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-x-4 gap-y-2 px-5 py-3">
         <Cell label="Prev Close">{fmtMoney(snap.previousClose)}</Cell>
         <Cell label="Day Low" valueClass="text-down">
           {fmtMoney(snap.dayLow)}
@@ -66,14 +67,14 @@ export default function SessionStats({ snap }: { snap: Snapshot }) {
         </Cell>
       </div>
       {weekPos !== null ? (
-        <div className="fb-session-range relative h-1 bg-border">
+        <div className="relative h-1 bg-border">
           <div
             className="absolute top-0 h-full bg-accent"
             style={{ left: 0, width: `${Math.max(0, Math.min(100, weekPos))}%` }}
           />
         </div>
       ) : null}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2 p-3 border-t border-border">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2 px-5 py-3 border-t border-border">
         <Cell label="1M" valueClass={pctClass(snap.perf1m)}>
           {fmtPct(snap.perf1m, 2)}
         </Cell>
@@ -87,6 +88,6 @@ export default function SessionStats({ snap }: { snap: Snapshot }) {
           {fmtPct(snap.perf1y, 2)}
         </Cell>
       </div>
-    </section>
+    </div>
   );
 }
