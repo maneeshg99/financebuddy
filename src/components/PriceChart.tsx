@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import useSWR from "swr";
 import {
   CartesianGrid,
   Line,
@@ -27,6 +28,14 @@ const COLORS = {
   tipLabel: "#ff6600",
 };
 
+const fetcher = async (url: string): Promise<ChartPoint[]> => {
+  const r = await fetch(url, { cache: "no-store" });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const j = await r.json();
+  if (!Array.isArray(j)) throw new Error("Unexpected response");
+  return j as ChartPoint[];
+};
+
 export default function PriceChart({
   symbol,
   noFrame = false,
@@ -35,31 +44,18 @@ export default function PriceChart({
   noFrame?: boolean;
 }) {
   const [range, setRange] = useState<Range>("1Y");
-  const [data, setData] = useState<ChartPoint[] | null>(null);
-  const [err, setErr] = useState<string | null>(null);
 
-  useEffect(() => {
-    let alive = true;
-    setErr(null);
-    setData(null);
-    fetch(`/api/chart/${encodeURIComponent(symbol)}?range=${range}`, { cache: "no-store" })
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((j) => {
-        if (!alive) return;
-        if (Array.isArray(j)) setData(j as ChartPoint[]);
-        else setErr("Unexpected response");
-      })
-      .catch((e) => {
-        if (!alive) return;
-        setErr(String(e?.message ?? e));
-      });
-    return () => {
-      alive = false;
-    };
-  }, [symbol, range]);
+  const { data, error, isLoading } = useSWR<ChartPoint[]>(
+    `/api/chart/${encodeURIComponent(symbol)}?range=${range}`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 60_000,
+      keepPreviousData: true,
+    }
+  );
+
+  const err = error ? String((error as Error).message ?? error) : null;
 
   const fmt = useMemo(() => {
     return (t: string) => {

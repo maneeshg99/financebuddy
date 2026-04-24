@@ -5,7 +5,10 @@ import Header from "@/components/Header";
 // Fire env validation at server startup.
 import "@/lib/env";
 
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://financebuddy-nine.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE),
   title: "FinanceBuddy",
   description: "Single-ticker dashboard with a composite 0-100 score, fair value band, and catalysts.",
 };

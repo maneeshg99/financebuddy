@@ -1,9 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import type { Snapshot } from "@/lib/types";
-import PriceChart from "./PriceChart";
 import SessionStats from "./SessionStats";
+
+// Recharts is ~50KB; only load it when the panel is expanded.
+const PriceChart = dynamic(() => import("./PriceChart"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[340px] flex items-center justify-center text-muted text-sm">
+      Loading chart…
+    </div>
+  ),
+});
 
 const STORAGE_KEY = "fb:chart-open";
 

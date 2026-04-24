@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cache, Suspense } from "react";
 import { unstable_cache } from "next/cache";
 import ChartSection from "@/components/ChartSection";
 import FairValueCard from "@/components/FairValueCard";
@@ -14,12 +15,15 @@ import { buildScoreReport } from "@/lib/score";
 import { buildFairValue } from "@/lib/fairvalue";
 import { fmtMoney, fmtMoneyCompact, fmtPct, pctClass } from "@/lib/format";
 
-const getSnapshot = (symbol: string) =>
+// React.cache dedupes within a single request (generateMetadata + page call).
+// unstable_cache dedupes across requests with a 5-min revalidate window.
+const getSnapshot = cache((symbol: string) =>
   unstable_cache(
     async () => fetchSnapshot(symbol),
     ["fb-snapshot", symbol],
     { revalidate: 300, tags: [`fb-snapshot-${symbol}`] }
-  )();
+  )()
+);
 
 export async function generateMetadata({
   params,
@@ -84,6 +88,43 @@ function HeaderStrip({
   );
 }
 
+function NewsSkeleton() {
+  return (
+    <section className="rounded-md border border-border bg-panel p-5 animate-pulse">
+      <div className="flex items-baseline justify-between mb-3">
+        <div className="h-3 w-36 bg-border" />
+        <div className="h-3 w-32 bg-border" />
+      </div>
+      <ul className="space-y-2">
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <li key={i} className="rounded-md border border-border bg-panel2 p-3">
+            <div className="h-3 w-4/5 bg-border mb-2" />
+            <div className="h-3 w-1/3 bg-border" />
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+async function NewsPanel({
+  symbol,
+  fallbackEarnings,
+}: {
+  symbol: string;
+  fallbackEarnings: string | null;
+}) {
+  const hasKey = hasFinnhubKey();
+  const [news, nextEarningsFinnhub] = hasKey
+    ? await Promise.all([fetchNews(symbol, 10), fetchNextEarnings(symbol)])
+    : ([[] as Awaited<ReturnType<typeof fetchNews>>, null] as [
+        Awaited<ReturnType<typeof fetchNews>>,
+        null,
+      ]);
+  const nextEarnings = nextEarningsFinnhub ?? fallbackEarnings;
+  return <NewsList items={news} nextEarnings={nextEarnings} hasKey={hasKey} />;
+}
+
 export default async function TickerPage({
   params,
   searchParams,
@@ -103,12 +144,6 @@ export default async function TickerPage({
     const report = buildScoreReport(snap);
     const fv = buildFairValue(snap);
 
-    const hasKey = hasFinnhubKey();
-    const [news, nextEarningsFinnhub] = hasKey
-      ? await Promise.all([fetchNews(symbol, 10), fetchNextEarnings(symbol)])
-      : [[], null];
-    const nextEarnings = nextEarningsFinnhub ?? snap.nextEarningsDate;
-
     return (
       <div className="space-y-4">
         <HeaderStrip snap={snap} />
@@ -119,7 +154,9 @@ export default async function TickerPage({
         {tab === "financials" ? <MetricsTable snap={snap} group="financials" /> : null}
         {tab === "analysis" ? <MetricsTable snap={snap} group="analysis" /> : null}
         {tab === "news" ? (
-          <NewsList items={news} nextEarnings={nextEarnings} hasKey={hasKey} />
+          <Suspense fallback={<NewsSkeleton />}>
+            <NewsPanel symbol={snap.symbol} fallbackEarnings={snap.nextEarningsDate} />
+          </Suspense>
         ) : null}
       </div>
     );
