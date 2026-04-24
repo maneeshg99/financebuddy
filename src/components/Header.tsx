@@ -1,6 +1,5 @@
 import Link from "next/link";
 import SearchBar from "./SearchBar";
-import ThemeSwitch from "./ThemeSwitch";
 
 export default function Header() {
   return (
@@ -16,7 +15,6 @@ export default function Header() {
         <div className="flex-1 max-w-md">
           <SearchBar compact />
         </div>
-        <ThemeSwitch />
       </div>
       <div className="border-t border-border">
         <div className="max-w-6xl mx-auto px-4 py-1 flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-wider overflow-hidden">

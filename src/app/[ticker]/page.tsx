@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
+import ChartSection from "@/components/ChartSection";
 import FairValueCard from "@/components/FairValueCard";
 import MetricsTable from "@/components/MetricsTable";
 import NewsList from "@/components/NewsList";
-import PriceChart from "@/components/PriceChart";
 import ScoreCard from "@/components/ScoreCard";
 import SessionStats from "@/components/SessionStats";
+import TabNav, { parseTab } from "@/components/TabNav";
 import WatchlistStar from "@/components/WatchlistStar";
 import { fetchSnapshot, normalizeSymbol } from "@/lib/yahoo";
 import { fetchNews, fetchNextEarnings, hasFinnhubKey } from "@/lib/finnhub";
@@ -62,9 +63,16 @@ function HeaderStrip({
   );
 }
 
-export default async function TickerPage({ params }: { params: { ticker: string } }) {
+export default async function TickerPage({
+  params,
+  searchParams,
+}: {
+  params: { ticker: string };
+  searchParams?: { t?: string | string[] };
+}) {
   const raw = decodeURIComponent(params.ticker);
   const symbol = normalizeSymbol(raw);
+  const tab = parseTab(searchParams?.t);
 
   try {
     const snap = await getSnapshot(symbol);
@@ -81,16 +89,18 @@ export default async function TickerPage({ params }: { params: { ticker: string 
     const nextEarnings = nextEarningsFinnhub ?? snap.nextEarningsDate;
 
     return (
-      <div className="space-y-5">
+      <div className="space-y-4">
         <HeaderStrip snap={snap} />
-        <div className="fb-v2-only">
-          <SessionStats snap={snap} />
-        </div>
-        <ScoreCard report={report} />
-        <FairValueCard fv={fv} price={snap.price} />
-        <PriceChart symbol={snap.symbol} />
-        <MetricsTable snap={snap} />
-        <NewsList items={news} nextEarnings={nextEarnings} hasKey={hasKey} />
+        <ChartSection symbol={snap.symbol} />
+        <SessionStats snap={snap} />
+        <TabNav current={tab} symbol={snap.symbol} />
+        {tab === "score" ? <ScoreCard report={report} /> : null}
+        {tab === "value" ? <FairValueCard fv={fv} price={snap.price} /> : null}
+        {tab === "financials" ? <MetricsTable snap={snap} group="financials" /> : null}
+        {tab === "analysis" ? <MetricsTable snap={snap} group="analysis" /> : null}
+        {tab === "news" ? (
+          <NewsList items={news} nextEarnings={nextEarnings} hasKey={hasKey} />
+        ) : null}
       </div>
     );
   } catch (err) {

@@ -110,8 +110,33 @@ function build(snap: Snapshot): Panel[] {
   ];
 }
 
-export default function MetricsTable({ snap }: { snap: Snapshot }) {
-  const panels = build(snap);
+export type MetricsGroup = "all" | "financials" | "analysis";
+
+const FINANCIALS_PANELS = [
+  "Valuation",
+  "Profitability",
+  "Balance sheet",
+  "Cash & yield",
+  "Growth",
+  "Per share",
+];
+const ANALYSIS_PANELS = ["Momentum", "Analyst"];
+
+export default function MetricsTable({
+  snap,
+  group = "all",
+}: {
+  snap: Snapshot;
+  group?: MetricsGroup;
+}) {
+  const all = build(snap);
+  const panels =
+    group === "financials"
+      ? all.filter((p) => FINANCIALS_PANELS.includes(p.title))
+      : group === "analysis"
+        ? all.filter((p) => ANALYSIS_PANELS.includes(p.title))
+        : all;
+  const total = panels.length;
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
       {panels.map((p, i) => (
@@ -119,7 +144,7 @@ export default function MetricsTable({ snap }: { snap: Snapshot }) {
           <div className="text-muted text-xs uppercase tracking-wider mb-2 flex items-baseline justify-between">
             <span>{p.title}</span>
             <span className="text-dim font-mono text-[10px]">
-              {String(i + 1).padStart(2, "0")}/08
+              {String(i + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
             </span>
           </div>
           <dl className="space-y-1">
