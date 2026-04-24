@@ -1,13 +1,14 @@
 import type { NewsItem } from "./types";
+import { env } from "./env";
 
 const BASE = "https://finnhub.io/api/v1";
 
 export function hasFinnhubKey(): boolean {
-  return !!(process.env.FINNHUB_API_KEY && process.env.FINNHUB_API_KEY.trim().length > 0);
+  return !!(env.FINNHUB_API_KEY && env.FINNHUB_API_KEY.trim().length > 0);
 }
 
 function key(): string {
-  return (process.env.FINNHUB_API_KEY ?? "").trim();
+  return (env.FINNHUB_API_KEY ?? "").trim();
 }
 
 function isoDateDaysAgo(days: number): string {

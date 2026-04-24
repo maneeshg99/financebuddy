@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
 import ChartSection from "@/components/ChartSection";
@@ -19,6 +20,27 @@ const getSnapshot = (symbol: string) =>
     ["fb-snapshot", symbol],
     { revalidate: 300, tags: [`fb-snapshot-${symbol}`] }
   )();
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { ticker: string };
+}): Promise<Metadata> {
+  const raw = decodeURIComponent(params.ticker);
+  const symbol = normalizeSymbol(raw);
+  let name: string | null = null;
+  try {
+    const snap = await getSnapshot(symbol);
+    name = snap.name;
+  } catch {
+    // fall through to symbol-only title
+  }
+  const title = name ? `${symbol} · ${name} · FinanceBuddy` : `${symbol} · FinanceBuddy`;
+  const description = name
+    ? `${name} — composite score, fair value band, metrics, and news on FinanceBuddy.`
+    : `${symbol} composite score, fair value band, metrics, and news on FinanceBuddy.`;
+  return { title, description };
+}
 
 function HeaderStrip({
   snap,

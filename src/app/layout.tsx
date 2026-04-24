@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Header from "@/components/Header";
+// Fire env validation at server startup.
+import "@/lib/env";
 
 export const metadata: Metadata = {
   title: "FinanceBuddy",
@@ -20,8 +23,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span className="text-accent">{"<MENU>"}</span>
             {" FOR FAVORITES   FB-01 EQUITY   © 2026 FB-TERMINAL"}
           </div>
-          Data: Yahoo Finance (via yahoo-finance2) · News: Finnhub · For personal research use. Not investment advice.
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span>Data: Yahoo Finance &amp; Finnhub · For personal research use. Not investment advice.</span>
+            <span className="text-dim">·</span>
+            <a href="/privacy" className="hover:text-accent">Privacy</a>
+            <span className="text-dim">·</span>
+            <a href="/terms" className="hover:text-accent">Terms</a>
+            <span className="text-dim">·</span>
+            <a href="/data-sources" className="hover:text-accent">Data sources</a>
+          </div>
         </footer>
+        <Analytics />
       </body>
     </html>
   );
