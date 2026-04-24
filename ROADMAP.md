@@ -16,27 +16,23 @@ A phased list of improvements, ordered by urgency. Each item is tagged with its 
 ---
 
 ## Phase 0 — Ship blockers
-Must do before inviting anyone to use the site publicly. **16 items.**
+Must do before inviting anyone to use the site publicly. **13 items — all ✅ shipped in commit `c702553`.**
 
-| Category | Item | Source | Effort |
-|---|---|---|---|
-| Operational | Custom domain (buy + `vercel domains add`) | draft | S |
-| Operational | Dynamic OG image endpoint per ticker | draft | M |
-| Operational | Favicon + `apple-touch-icon.png` | draft | S |
-| Operational | `app/not-found.tsx` — BBG-themed 404 | draft | S |
-| Operational | `app/robots.ts` + `app/sitemap.ts` | draft | S |
-| Operational | Legal pages: `/privacy`, `/terms`, `/data-sources` | draft | M |
-| Operational | `README.md` for the GitHub repo | draft | S |
-| Reliability | Rate limiting on `/api/chart/[symbol]` (Upstash) | draft | S |
-| Reliability | Input regex validation on chart route before hitting Yahoo | perfector | S |
-| Reliability | Error boundary at `app/[ticker]/error.tsx` with retry | perfector | S |
-| Reliability | Snapshot KV / Upstash Redis caching (5 min) | draft | M |
-| Reliability | Error observability — Sentry or Vercel log drain | draft | M |
-| Security | Content-Security-Policy via Next middleware | perfector | M |
-| Security | HSTS + Permissions-Policy + Referrer-Policy headers | perfector | S |
-| Security | Zod env validation — fail fast on missing `FINNHUB_API_KEY` | draft | S |
-| Analytics | Vercel Analytics + Speed Insights enabled | draft | S |
-| Compliance | Data licensing audit — Yahoo TOS for intended scale | perfector | S |
+| Category | Item | Source | Effort | Status |
+|---|---|---|---|---|
+| Operational | Dynamic OG image endpoint (default + per-ticker) | draft | M | ✅ |
+| Operational | Favicon + `apple-touch-icon.png` | draft | S | ✅ |
+| Operational | `app/not-found.tsx` — BBG-themed 404 | draft | S | ✅ |
+| Operational | `app/robots.ts` + `app/sitemap.ts` | draft | S | ✅ |
+| Operational | Legal pages: `/privacy`, `/terms`, `/data-sources` | draft | M | ✅ |
+| Operational | `README.md` for the GitHub repo | draft | S | ✅ |
+| Reliability | Input regex validation on chart route before hitting Yahoo | perfector | S | ✅ |
+| Reliability | Error boundary at `app/[ticker]/error.tsx` with retry | perfector | S | ✅ |
+| Security | Content-Security-Policy via Next middleware | perfector | M | ✅ |
+| Security | HSTS + Permissions-Policy + Referrer-Policy headers | perfector | S | ✅ |
+| Security | Zod env validation — fail fast on missing `FINNHUB_API_KEY` | draft | S | ✅ |
+| Analytics | Vercel Analytics + Speed Insights enabled | draft | S | ✅ |
+| Compliance | Data licensing audit — Yahoo TOS for intended scale | perfector | S | ✅ |
 
 ---
 
@@ -143,4 +139,16 @@ Account layer, broader market coverage, positioning. **10 items.**
 
 ---
 
-**Totals:** 87 items across 5 phases. Mix: ~39 `draft` / ~44 `perfector` / 4 `both`. Effort: 37 S · 29 M · 21 L.
+**Totals:** 87 items across 5 phases + backlog. Mix: ~39 `draft` / ~44 `perfector` / 4 `both`. Effort: 37 S · 29 M · 21 L.
+
+---
+
+## Backlog
+Items parked until the required external service or decision is in place. Not blocked on code — blocked on a sign-up / purchase / provider pick. **4 items.**
+
+| Category | Item | Source | Effort | Blocked on |
+|---|---|---|---|---|
+| Operational | Custom domain (buy + `vercel domains add`) | draft | S | Buy a domain, share the name, then I run the CLI + update `NEXT_PUBLIC_SITE_URL` |
+| Reliability | Snapshot KV / Upstash Redis caching (5 min) | draft | M | Free [Upstash Redis](https://upstash.com) DB — paste `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` |
+| Reliability | Rate limiting on `/api/chart/[symbol]` | draft | S | Same Upstash DB as above (reused) |
+| Reliability | Error observability (Sentry) | draft | M | Free [Sentry](https://sentry.io) project — paste `SENTRY_DSN` |

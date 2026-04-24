@@ -44,12 +44,14 @@ export default function ChartSection({ snap }: { snap: Snapshot }) {
           {hydrated ? (open ? "[ − ]" : "[ + ]") : "[ · ]"}
         </span>
       </button>
-      <div className="border-t border-border">
-        <SessionStats snap={snap} />
-      </div>
       {open ? (
-        <div id="fb-chart-body" className="border-t border-border p-5">
-          <PriceChart symbol={snap.symbol} noFrame />
+        <div id="fb-chart-body">
+          <div className="border-t border-border">
+            <SessionStats snap={snap} />
+          </div>
+          <div className="border-t border-border p-5">
+            <PriceChart symbol={snap.symbol} noFrame />
+          </div>
         </div>
       ) : null}
     </section>
