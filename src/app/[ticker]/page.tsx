@@ -115,12 +115,22 @@ async function NewsPanel({
   fallbackEarnings: string | null;
 }) {
   const hasKey = hasFinnhubKey();
-  const [news, nextEarningsFinnhub] = hasKey
-    ? await Promise.all([fetchNews(symbol, 10), fetchNextEarnings(symbol)])
-    : ([[] as Awaited<ReturnType<typeof fetchNews>>, null] as [
-        Awaited<ReturnType<typeof fetchNews>>,
-        null,
+  type News = Awaited<ReturnType<typeof fetchNews>>;
+  let news: News = [];
+  let nextEarningsFinnhub: string | null = null;
+  if (hasKey) {
+    // finnhub.ts catches internally — this try/catch is belt-and-suspenders
+    // so a rare uncaught reject degrades the news panel instead of taking
+    // down the whole /[ticker] route via the error boundary.
+    try {
+      [news, nextEarningsFinnhub] = await Promise.all([
+        fetchNews(symbol, 10),
+        fetchNextEarnings(symbol),
       ]);
+    } catch (err) {
+      console.error(`[financebuddy] NewsPanel fetch failed for ${symbol}:`, err);
+    }
+  }
   const nextEarnings = nextEarningsFinnhub ?? fallbackEarnings;
   return <NewsList items={news} nextEarnings={nextEarnings} hasKey={hasKey} />;
 }

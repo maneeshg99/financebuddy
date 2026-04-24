@@ -16,6 +16,19 @@ import type { ChartPoint } from "@/lib/types";
 type Range = "1M" | "3M" | "1Y" | "5Y";
 const RANGES: Range[] = ["1M", "3M", "1Y", "5Y"];
 
+function rangeToApproxDays(r: Range): number {
+  switch (r) {
+    case "1M":
+      return 30;
+    case "3M":
+      return 90;
+    case "1Y":
+      return 365;
+    case "5Y":
+      return 365 * 5;
+  }
+}
+
 const COLORS = {
   price: "#ffd500",
   ma50: "#00d4ff",
@@ -45,7 +58,7 @@ export default function PriceChart({
 }) {
   const [range, setRange] = useState<Range>("1Y");
 
-  const { data, error, isLoading } = useSWR<ChartPoint[]>(
+  const { data, error } = useSWR<ChartPoint[]>(
     `/api/chart/${encodeURIComponent(symbol)}?range=${range}`,
     fetcher,
     {
@@ -57,14 +70,24 @@ export default function PriceChart({
 
   const err = error ? String((error as Error).message ?? error) : null;
 
+  // Derive the tick formatter from the span of the rendered data, not from
+  // the selected range. With keepPreviousData the data may belong to the
+  // PREVIOUS range for a beat after a range switch — formatting by range
+  // would mislabel those ticks until the refetch completes.
   const fmt = useMemo(() => {
+    const spanDays =
+      data && data.length >= 2
+        ? (new Date(data[data.length - 1].t).getTime() -
+            new Date(data[0].t).getTime()) /
+          86_400_000
+        : rangeToApproxDays(range);
     return (t: string) => {
       const d = new Date(t);
-      if (range === "5Y") return d.toLocaleDateString(undefined, { year: "numeric", month: "short" });
-      if (range === "1Y") return d.toLocaleDateString(undefined, { month: "short", year: "2-digit" });
+      if (spanDays > 400) return d.toLocaleDateString(undefined, { year: "numeric", month: "short" });
+      if (spanDays > 120) return d.toLocaleDateString(undefined, { month: "short", year: "2-digit" });
       return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
     };
-  }, [range]);
+  }, [data, range]);
 
   const body = (
     <>

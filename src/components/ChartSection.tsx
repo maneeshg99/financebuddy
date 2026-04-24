@@ -54,16 +54,20 @@ export default function ChartSection({ snap }: { snap: Snapshot }) {
           {hydrated ? (open ? "[ − ]" : "[ + ]") : "[ · ]"}
         </span>
       </button>
-      {open ? (
-        <div id="fb-chart-body">
-          <div className="border-t border-border">
-            <SessionStats snap={snap} />
-          </div>
-          <div className="border-t border-border p-5">
-            <PriceChart symbol={snap.symbol} noFrame />
-          </div>
-        </div>
-      ) : null}
+      {/* Always-mounted region so aria-controls always has a target. Children
+          render only when open so the chart bundle stays lazy. */}
+      <div id="fb-chart-body" hidden={!open}>
+        {open ? (
+          <>
+            <div className="border-t border-border">
+              <SessionStats snap={snap} />
+            </div>
+            <div className="border-t border-border p-5">
+              <PriceChart symbol={snap.symbol} noFrame />
+            </div>
+          </>
+        ) : null}
+      </div>
     </section>
   );
 }
