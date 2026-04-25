@@ -96,20 +96,37 @@ export default function FairValueCard({
       ) : null}
 
       <div className="mt-5 border-t border-border pt-4">
-        <div className="text-xs uppercase tracking-wider text-muted mb-2">METHODS /// N=5</div>
+        <div className="text-xs uppercase tracking-wider text-muted mb-2">
+          METHODS /// N={estimates.length}
+        </div>
         <ul className="space-y-1 text-sm">
           {estimates.map((e) => (
             <li key={e.method} className="flex items-baseline justify-between gap-3">
-              <div className="text-ink">
-                {e.method}
+              <div className={e.excluded ? "text-muted" : "text-ink"}>
+                <span className={e.excluded ? "line-through" : ""}>{e.method}</span>
+                {e.excluded ? (
+                  <span className="ml-2 inline-block rounded-sm border border-warn/40 bg-warn/10 px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wider text-warn">
+                    excluded
+                  </span>
+                ) : null}
                 {e.note ? <span className="text-dim"> — {e.note}</span> : null}
               </div>
-              <div className="font-mono text-ink whitespace-nowrap">
+              <div
+                className={`font-mono whitespace-nowrap ${
+                  e.excluded ? "text-dim line-through" : "text-ink"
+                }`}
+              >
                 {e.value !== null ? fmtMoney(e.value) : <span className="text-dim">—</span>}
               </div>
             </li>
           ))}
         </ul>
+        {estimates.some((e) => e.excluded) ? (
+          <p className="mt-2 text-[11px] text-dim">
+            Outliers (more than 2 robust-σ from the median of the other estimates) are excluded
+            from the band so a single noisy method can&rsquo;t drag the verdict.
+          </p>
+        ) : null}
       </div>
     </section>
   );

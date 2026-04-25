@@ -1,5 +1,5 @@
 import type { ScoreReport, SubScore } from "@/lib/types";
-import { scoreBg, scoreClass } from "@/lib/format";
+import { emptyReason, fmtDriverValue, scoreBg, scoreClass } from "@/lib/format";
 
 function SubCard({ sub }: { sub: SubScore }) {
   const s = sub.score;
@@ -20,21 +20,35 @@ function SubCard({ sub }: { sub: SubScore }) {
         />
       </div>
       <ul className="mt-3 space-y-1 text-xs">
-        {sub.drivers.map((d) => (
-          <li key={d.label} className="flex items-baseline justify-between gap-2">
-            <span className="text-muted truncate">
-              {d.label}
-              {d.note ? <span className="text-dim"> · {d.note}</span> : null}
-            </span>
-            <span className="font-mono text-ink whitespace-nowrap">
-              {d.score === null ? (
-                <span className="text-dim">—</span>
-              ) : (
-                <span className={scoreClass(d.score)}>{d.score}</span>
-              )}
-            </span>
-          </li>
-        ))}
+        {sub.drivers.map((d) => {
+          const missingValue = d.value === null;
+          const valueStr = missingValue ? `— (${emptyReason(d.label)})` : fmtDriverValue(d.label, d.value);
+          return (
+            <li
+              key={d.label}
+              className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-baseline gap-x-2"
+              title={d.note ? `${d.label} · ${d.note}` : d.label}
+            >
+              <span className="text-muted truncate">{d.label}</span>
+              <span
+                className={`font-mono whitespace-nowrap ${missingValue ? "text-dim" : "text-ink"}`}
+              >
+                {valueStr}
+              </span>
+              <span className="font-mono whitespace-nowrap">
+                {d.score === null ? (
+                  <span className="text-dim">— pts</span>
+                ) : (
+                  <>
+                    <span className="text-dim">→ </span>
+                    <span className={scoreClass(d.score)}>{d.score}</span>
+                    <span className="text-dim"> pts</span>
+                  </>
+                )}
+              </span>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

@@ -126,6 +126,12 @@ export type FairValueEstimate = {
   method: string;
   value: number | null; // price; null for informational (e.g., reverse DCF growth)
   note?: string;
+  /**
+   * True when this method's `value` was excluded from the band roll-up because
+   * it sat more than 2 robust-σ from the median of the other estimates.
+   * The estimate is still rendered in the list with a tag.
+   */
+  excluded?: boolean;
 };
 
 export type FairValueVerdict = "Undervalued" | "Fair" | "Overvalued" | "Insufficient data";

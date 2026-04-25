@@ -4,6 +4,7 @@ import { cache, Suspense } from "react";
 import { unstable_cache } from "next/cache";
 import ChartSection from "@/components/ChartSection";
 import FairValueCard from "@/components/FairValueCard";
+import MarginOfSafetyBadge from "@/components/MarginOfSafetyBadge";
 import MetricsTable from "@/components/MetricsTable";
 import NewsList from "@/components/NewsList";
 import ScoreCard from "@/components/ScoreCard";
@@ -159,7 +160,12 @@ export default async function TickerPage({
         <HeaderStrip snap={snap} />
         <ChartSection snap={snap} />
         <TabNav current={tab} symbol={snap.symbol} />
-        {tab === "score" ? <ScoreCard report={report} /> : null}
+        {tab === "score" ? (
+          <>
+            <MarginOfSafetyBadge fv={fv} price={snap.price} />
+            <ScoreCard report={report} />
+          </>
+        ) : null}
         {tab === "value" ? <FairValueCard fv={fv} price={snap.price} /> : null}
         {tab === "financials" ? <MetricsTable snap={snap} group="financials" /> : null}
         {tab === "analysis" ? <MetricsTable snap={snap} group="analysis" /> : null}

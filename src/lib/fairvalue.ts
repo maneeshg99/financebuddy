@@ -129,18 +129,69 @@ function analystTarget(s: Snapshot): FairValueEstimate {
   };
 }
 
+/**
+ * Median absolute deviation — robust σ proxy that doesn't blow up when an
+ * outlier (e.g. Graham for a tech mega-cap) skews the mean.
+ */
+function mad(values: number[], med: number): number {
+  if (values.length === 0) return 0;
+  const deviations = values.map((v) => Math.abs(v - med));
+  return median(deviations);
+}
+
+/**
+ * Mark estimates whose `value` is more than `cutoff` robust-σ (1.4826 × MAD)
+ * from the median of the OTHER priced estimates as `excluded: true`. Returns
+ * a new array; the original objects are not mutated.
+ *
+ * Robust-σ instead of true σ because a 9× span (Graham vs. DCF for a tech
+ * mega-cap) drags the mean enough to mask real outliers. With ≤2 priced
+ * estimates the rule is a no-op — we don't have enough signal to exclude.
+ */
+function flagOutliers(
+  estimates: FairValueEstimate[],
+  cutoff = 2
+): FairValueEstimate[] {
+  const priced: { idx: number; value: number }[] = [];
+  estimates.forEach((e, idx) => {
+    if (e.value !== null && Number.isFinite(e.value) && e.value > 0) {
+      priced.push({ idx, value: e.value });
+    }
+  });
+  if (priced.length <= 2) return estimates.map((e) => ({ ...e }));
+
+  const out = estimates.map((e) => ({ ...e }));
+  for (const { idx, value } of priced) {
+    const others = priced.filter((p) => p.idx !== idx).map((p) => p.value);
+    const med = median(others);
+    const sigma = 1.4826 * mad(others, med);
+    if (sigma > 0 && Math.abs(value - med) > cutoff * sigma) {
+      out[idx].excluded = true;
+      out[idx].note = out[idx].note
+        ? `${out[idx].note} · excluded as outlier`
+        : "excluded as outlier";
+    }
+  }
+  return out;
+}
+
 export function buildFairValue(s: Snapshot): FairValue {
-  const estimates: FairValueEstimate[] = [
+  const raw: FairValueEstimate[] = [
     twoStageDCF(s),
     reverseDCF(s),
     grahamNumber(s),
     peBased(s),
     analystTarget(s),
   ];
+  const estimates = flagOutliers(raw);
 
-  const priced = estimates.map((e) => e.value).filter((v): v is number => v !== null && Number.isFinite(v) && v > 0);
+  // Band roll-up uses ONLY non-excluded priced estimates.
+  const inBand = estimates
+    .filter((e) => !e.excluded)
+    .map((e) => e.value)
+    .filter((v): v is number => v !== null && Number.isFinite(v) && v > 0);
 
-  if (priced.length === 0) {
+  if (inBand.length === 0) {
     return {
       low: null,
       mid: null,
@@ -151,9 +202,9 @@ export function buildFairValue(s: Snapshot): FairValue {
     };
   }
 
-  const low = Math.min(...priced);
-  const high = Math.max(...priced);
-  const mid = median(priced);
+  const low = Math.min(...inBand);
+  const high = Math.max(...inBand);
+  const mid = median(inBand);
 
   const price = s.price;
   let verdict: FairValueVerdict = "Fair";
@@ -166,4 +217,13 @@ export function buildFairValue(s: Snapshot): FairValue {
   const upsidePct = price && mid ? (mid - price) / price : null;
 
   return { low, mid, high, verdict, upsidePct, estimates };
+}
+
+/**
+ * Margin of Safety = (fair_value_mid − price) / price, computed off the
+ * post-outlier-exclusion mid. Positive → undervalued; negative → premium.
+ */
+export function marginOfSafety(fv: FairValue, price: number | null): number | null {
+  if (fv.mid === null || price === null || !Number.isFinite(price) || price <= 0) return null;
+  return (fv.mid - price) / price;
 }
